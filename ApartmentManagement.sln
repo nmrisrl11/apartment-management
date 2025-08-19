@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApartmentManagement.API", "src\ApartmentManagement.API\ApartmentManagement.API.csproj", "{061DB540-8BAD-41A0-B8CC-A6C12253D7B1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{061DB540-8BAD-41A0-B8CC-A6C12253D7B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{061DB540-8BAD-41A0-B8CC-A6C12253D7B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{061DB540-8BAD-41A0-B8CC-A6C12253D7B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{061DB540-8BAD-41A0-B8CC-A6C12253D7B1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{061DB540-8BAD-41A0-B8CC-A6C12253D7B1} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DBEEE8AC-6B6F-4F78-B812-E5BCF04736E2}
+	EndGlobalSection
+EndGlobal
