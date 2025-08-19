@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("ApartmentManagement.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05a47b836821e068a7ad7568d2fad4d515c135ce")]
 [assembly: System.Reflection.AssemblyProductAttribute("ApartmentManagement.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("ApartmentManagement.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
