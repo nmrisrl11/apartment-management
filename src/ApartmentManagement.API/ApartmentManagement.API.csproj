@@ -4,11 +4,22 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>124466a6-d39d-4fe3-91ad-4bc49154f457</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Scalar.AspNetCore" Version="2.6.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Leasing\Leasing.Application\Leasing.Application.csproj" />
+    <ProjectReference Include="..\Leasing\Leasing.Controllers\Leasing.Controllers.csproj" />
+    <ProjectReference Include="..\Leasing\Leasing.Infrastructure\Leasing.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

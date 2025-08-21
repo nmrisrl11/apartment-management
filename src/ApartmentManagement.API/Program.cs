@@ -1,10 +1,56 @@
+using Leasing.Application;
+using Leasing.Infrastructure;
+using Microsoft.OpenApi.Models;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((doc, ctx, ct) =>
+    {
+        doc.Components ??= new();
+        doc.Components.SecuritySchemes["BearerAuth"] = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Scheme = "bearer",
+            BearerFormat = "JWT",
+            In = ParameterLocation.Header,
+            Name = "Authorization"
+        };
+        return Task.CompletedTask;
+    });
+
+    options.AddOperationTransformer((op, ctx, ct) =>
+    {
+        var hasAuth = ctx.Description.ActionDescriptor?.EndpointMetadata?
+            .OfType<Microsoft.AspNetCore.Authorization.IAuthorizeData>()
+            .Any() == true;
+
+        if (hasAuth)
+        {
+            op.Security ??= new List<OpenApiSecurityRequirement>();
+            op.Security.Add(new OpenApiSecurityRequirement
+            {
+                [new OpenApiSecurityScheme
+                {
+                    Reference = new OpenApiReference
+                    { Type = ReferenceType.SecurityScheme, Id = "BearerAuth" }
+                }] = Array.Empty<string>()
+            });
+        }
+        return Task.CompletedTask;
+    });
+});
+
+// Leasing
+builder.Services.AddLeasingApplication();
+builder.Services.AddLeasingInfrastructure(builder.Configuration);
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
