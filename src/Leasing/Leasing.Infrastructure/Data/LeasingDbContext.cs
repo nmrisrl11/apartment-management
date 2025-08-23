@@ -17,8 +17,10 @@ namespace Leasing.Infrastructure.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        public DbSet<Apartment> Apartments { get; set; }
+        public DbSet<LeasingAgreement> LeasingAgreements { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Owner> Owners { get; set; }
+        public DbSet<Apartment> Apartments { get; set; }
         public DbSet<LeasingRecord> LeasingRecords { get; set; }
     }
 }

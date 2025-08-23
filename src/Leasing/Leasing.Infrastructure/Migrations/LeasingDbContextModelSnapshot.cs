@@ -36,12 +36,51 @@ namespace Leasing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("OwnerId");
+
                     b.ToTable("Apartments", "Leasing");
+                });
+
+            modelBuilder.Entity("Leasing.Domain.Entities.LeasingAgreement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApartmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateLeased")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateRenewal")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TenantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApartmentId");
+
+                    b.HasIndex("OwnerId");
+
+                    b.HasIndex("TenantId");
+
+                    b.ToTable("LeasingAgreements", "Leasing");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.LeasingRecord", b =>
@@ -58,6 +97,9 @@ namespace Leasing.Infrastructure.Migrations
                     b.Property<DateTime>("DateRenewal")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");
 
@@ -65,9 +107,25 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.HasIndex("ApartmentId");
 
+                    b.HasIndex("OwnerId");
+
                     b.HasIndex("TenantId");
 
                     b.ToTable("LeasingRecords", "Leasing");
+                });
+
+            modelBuilder.Entity("Leasing.Domain.Entities.Owner", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Owners", "Leasing");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.Tenant", b =>
@@ -92,11 +150,53 @@ namespace Leasing.Infrastructure.Migrations
                     b.ToTable("Tenants", "Leasing");
                 });
 
+            modelBuilder.Entity("Leasing.Domain.Entities.Apartment", b =>
+                {
+                    b.HasOne("Leasing.Domain.Entities.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId");
+
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("Leasing.Domain.Entities.LeasingAgreement", b =>
+                {
+                    b.HasOne("Leasing.Domain.Entities.Apartment", "Apartment")
+                        .WithMany()
+                        .HasForeignKey("ApartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Leasing.Domain.Entities.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Leasing.Domain.Entities.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Apartment");
+
+                    b.Navigation("Owner");
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("Leasing.Domain.Entities.LeasingRecord", b =>
                 {
                     b.HasOne("Leasing.Domain.Entities.Apartment", "Apartment")
                         .WithMany("LeasingHistory")
                         .HasForeignKey("ApartmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Leasing.Domain.Entities.Owner", "Owner")
+                        .WithMany()
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -107,6 +207,8 @@ namespace Leasing.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Apartment");
+
+                    b.Navigation("Owner");
 
                     b.Navigation("Tenant");
                 });

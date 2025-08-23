@@ -7,6 +7,8 @@ namespace Leasing.Domain.Entities
     public class Apartment
     {
         public ApartmentId Id { get; private set; } = null!;
+        public OwnerId OwnerId { get; private set; } = null!;
+        public Owner Owner { get; private set; } = null!;
         public string BuildingNumber { get; private set; } = null!;
         public string ApartmentNumber { get; private set; } = null!;
         public ApartmentStatus Status { get; private set; }

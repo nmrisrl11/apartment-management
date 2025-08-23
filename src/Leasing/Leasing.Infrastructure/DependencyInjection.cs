@@ -11,7 +11,9 @@ namespace Leasing.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddLeasingInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddLeasingInfrastructure(
+            this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddDbContext<LeasingDbContext>(o =>
             {
@@ -20,10 +22,12 @@ namespace Leasing.Infrastructure
             });
 
             // Repositories
+            services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Queries
+            services.AddScoped<IOwnerQueries, OwnerQueries>();
             services.AddScoped<IApartmentQueries, ApartmentQueries>();
 
             return services;

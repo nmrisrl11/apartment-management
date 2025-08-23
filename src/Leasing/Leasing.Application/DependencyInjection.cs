@@ -8,6 +8,7 @@ namespace Leasing.Application
     {
         public static IServiceCollection AddLeasingApplication(this IServiceCollection services)
         {
+            services.AddScoped<IOwnerCommands, OwnerCommands>();
             services.AddScoped<IApartmentCommands, ApartmentCommands>();
 
             return services;

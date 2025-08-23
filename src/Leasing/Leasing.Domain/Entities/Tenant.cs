@@ -4,10 +4,10 @@ namespace Leasing.Domain.Entities
 {
     public class Tenant
     {
-        public TenantId Id { get; set; } = null!;
-        public required string Name { get; set; }
-        public required string Email { get; set; }
-        public required string ContactNumber { get; set; }
+        public TenantId Id { get; private set; } = null!;
+        public string Name { get; private set; } = null!;
+        public string Email { get; private set; } = null!;
+        public string ContactNumber { get; private set; } = null!;
         public List<LeasingRecord> LeasingHistory { get; set; } = [];
 
         public static Tenant Create(string name, string email, string contactNumber)
