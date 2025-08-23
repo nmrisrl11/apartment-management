@@ -21,9 +21,13 @@ namespace Leasing.Application.CommandHandler
             _mapper = mapper;
         }
 
-        public async Task<ApartmentResponse> AddAsync(string buildingNumber, string apartmentNumber, CancellationToken cancellationToken)
+        public async Task<ApartmentResponse> AddAsync(Guid ownerId, string buildingNumber, string apartmentNumber, CancellationToken cancellationToken)
         {
-            Apartment apartment = Apartment.Create(buildingNumber, apartmentNumber);
+            Apartment apartment = Apartment.Create(
+                new OwnerId(ownerId),
+                buildingNumber,
+                apartmentNumber);
+
             await _unitOfWork.Apartments.AddAsync(apartment);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 

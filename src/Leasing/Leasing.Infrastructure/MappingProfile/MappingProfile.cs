@@ -14,7 +14,9 @@ namespace Leasing.Infrastructure.MappingProfile
 
             // Mapping for Apartment
             CreateMap<Apartment, ApartmentResponse>()
-                .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value));
+                .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value))
+                .ForMember(a => a.OwnerId, options => options.MapFrom(a => a.OwnerId.Value))
+                .ForMember(a => a.Owner, options => options.MapFrom(a => a.Owner));
 
             // Mapping for Apartment Leasing History
             CreateMap<LeasingRecord, ApartmentLeasingRecordResponse>()

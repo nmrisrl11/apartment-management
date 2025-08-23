@@ -16,11 +16,15 @@ namespace Leasing.Domain.Entities
 
         protected Apartment() { }
 
-        public static Apartment Create(string buildingNumber, string apartmentNumber)
+        public static Apartment Create(
+            OwnerId ownerId,
+            string buildingNumber,
+            string apartmentNumber)
         {
             return new Apartment
             {
                 Id = new ApartmentId(Guid.NewGuid()),
+                OwnerId = ownerId,
                 BuildingNumber = buildingNumber,
                 ApartmentNumber = apartmentNumber,
                 Status = ApartmentStatus.VACANT
