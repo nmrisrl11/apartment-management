@@ -22,11 +22,13 @@ namespace Leasing.Infrastructure
             });
 
             // Repositories
+            services.AddScoped<ILeasingAgreementRepository, LeasingAgreementRepository>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Queries
+            services.AddScoped<ILeasingAgreementQueries, LeasingAgreementQueries>();
             services.AddScoped<IOwnerQueries, OwnerQueries>();
             services.AddScoped<IApartmentQueries, ApartmentQueries>();
 

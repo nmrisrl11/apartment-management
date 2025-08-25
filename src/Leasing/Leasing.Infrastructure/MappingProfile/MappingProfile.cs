@@ -8,6 +8,13 @@ namespace Leasing.Infrastructure.MappingProfile
     {
         public MappingProfile()
         {
+            // Mapping for Leasing Agreement
+            CreateMap<LeasingAgreement, LeasingAgreementResponse>()
+                .ForMember(la => la.Id, options => options.MapFrom(la => la.Id.Value))
+                .ForMember(la => la.TenantId, options => options.MapFrom(la => la.TenantId.Value))
+                .ForMember(la => la.OwnerId, options => options.MapFrom(la => la.OwnerId.Value))
+                .ForMember(la => la.ApartmentId, options => options.MapFrom(la => la.ApartmentId.Value));
+
             // Mapping for Tenant
             CreateMap<Tenant, TenantResponse>()
                 .ForMember(t => t.Id, options => options.MapFrom(t => t.Id.Value));

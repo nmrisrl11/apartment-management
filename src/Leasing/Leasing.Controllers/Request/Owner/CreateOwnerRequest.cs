@@ -2,6 +2,6 @@
 {
     public class CreateOwnerRequest
     {
-        public required string Name { get; set; } = null!;
+        public required string Name { get; set; } = string.Empty;
     }
 }
