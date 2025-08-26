@@ -37,6 +37,14 @@ namespace Leasing.Domain.Entities
             ApartmentNumber = apartmentNumber;
         }
 
+        public void MarkAsVacant()
+        {
+            if(Status == ApartmentStatus.VACANT)
+                throw new ApartmentAlreadyVacantException("Apartment is already vacant.");
+
+            Status = ApartmentStatus.VACANT;
+        }
+
         public void MarkAsOccupied()
         {
             if(Status == ApartmentStatus.UNDER_MAINTENANCE)

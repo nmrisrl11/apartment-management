@@ -28,7 +28,7 @@ namespace Leasing.Domain.Entities
             DateTime dateRenewal)
         {
             Id = id;
-            TenantId = tenant.Id; // Set the TenantId from the new Tenant object
+            TenantId = tenant.Id;
             Tenant = tenant;
             OwnerId = ownerId;
             ApartmentId = apartmentId;
@@ -38,21 +38,12 @@ namespace Leasing.Domain.Entities
         }
 
         public static LeasingAgreement Create(
-            string tenantName,
-            string tenantEmail,
-            string tenantContactNumber,
+            Tenant newTenant,
             OwnerId ownerId,
             ApartmentId apartmentId,
             DateTime dateLeased,
             DateTime dateRenewal)
         {
-            // First, create the new Tenant entity using its own factory method
-            var newTenant = Tenant.Create(
-                name: tenantName,
-                email: tenantEmail,
-                contactNumber: tenantContactNumber);
-
-            // Now, create the LeasingAgreement using the newly created Tenant
             return new LeasingAgreement(
                 id: new LeasingAgreementId(Guid.NewGuid()),
                 tenant: newTenant,
@@ -60,6 +51,11 @@ namespace Leasing.Domain.Entities
                 apartmentId: apartmentId,
                 dateLeased: dateLeased,
                 dateRenewal: dateRenewal);
+        }
+
+        public void Renew()
+        {
+
         }
     }
 }

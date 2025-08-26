@@ -1,4 +1,6 @@
-﻿using Leasing.Domain.ValueObjects;
+﻿using Leasing.Domain.Enums;
+using Leasing.Domain.Exceptions;
+using Leasing.Domain.ValueObjects;
 
 namespace Leasing.Domain.Entities
 {
@@ -13,6 +15,7 @@ namespace Leasing.Domain.Entities
         public Apartment Apartment { get; private set; } = null!;
         public DateTime DateLeased { get; private set; }
         public DateTime DateRenewal { get; private set; }
+        public LeasingRecordStatus Status { get; set; }
 
         private LeasingRecord(LeasingRecordId id,
             TenantId tenantId,
@@ -27,6 +30,7 @@ namespace Leasing.Domain.Entities
             ApartmentId = apartmentId;
             DateLeased = dateLeased;
             DateRenewal = dateRenewal;
+            Status = LeasingRecordStatus.ACTIVE;
         }
 
         public static LeasingRecord Create(
@@ -42,8 +46,16 @@ namespace Leasing.Domain.Entities
                 ownerId,
                 apartmentId,
                 dateLeased,
-                dateRenewal
-            );
+                dateRenewal);
+        }
+
+        public void Process()
+        {
+            if (Status == LeasingRecordStatus.ENDED)
+                throw new LeasingContractAlreadyEndedException("The leasing contract already ended.");
+            
+            Status = LeasingRecordStatus.ENDED;
+            Apartment.MarkAsVacant();
         }
     }
 }

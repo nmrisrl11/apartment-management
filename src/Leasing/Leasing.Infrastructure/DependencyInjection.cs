@@ -25,6 +25,7 @@ namespace Leasing.Infrastructure
             services.AddScoped<ILeasingAgreementRepository, LeasingAgreementRepository>();
             services.AddScoped<IOwnerRepository, OwnerRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
+            services.AddScoped<ILeasingRecordRepository, LeasingRecordRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Queries

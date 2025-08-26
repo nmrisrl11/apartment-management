@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using FluentResults;
 using Leasing.Application.Commands;
-using Leasing.Application.Response;
+using Leasing.Application.Errors;
 using Leasing.Domain.Entities;
 using Leasing.Domain.Exceptions;
 using Leasing.Domain.Repositories;
+using Leasing.Domain.Services;
 using Leasing.Domain.ValueObjects;
 
 namespace Leasing.Application.CommandHandler
@@ -19,37 +21,44 @@ namespace Leasing.Application.CommandHandler
             _mapper = mapper;
         }
 
-        public async Task<LeasingAgreementResponse> AddAsync(
+        public async Task<Result> AddAsync(
             string tenantName,
             string tenantEmail,
             string tenantContactNumber,
             Guid ownerId,
             Guid apartmentId,
-            DateTime dateLeased,
-            DateTime dateRenewal,
             CancellationToken cancellationToken)
         {
-            Apartment? apartmentToLease = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
+            try
+            {
+                Owner? owner = await _unitOfWork.Owners.GetByIdAsync(new OwnerId(ownerId));
 
-            if (apartmentToLease is null)
-                throw new ApartmentNotFoundException($"Apartment with id: {apartmentId} is not found.");
+                if (owner is null)
+                    return Result.Fail(new NotFoundError($"Owner with id: {apartmentId} is not found."));
 
-            apartmentToLease.MarkAsOccupied();
+                Apartment? apartmentToLease = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
 
-            // 1. Domain logic: Create the new LeasingAgreement
-            LeasingAgreement newLeasingAgreement = LeasingAgreement.Create(
-                tenantName,
-                tenantEmail,
-                tenantContactNumber,
-                new OwnerId(ownerId),
-                new ApartmentId(apartmentId),
-                dateLeased,
-                dateRenewal);
+                if (apartmentToLease is null)
+                    return Result.Fail(new NotFoundError($"Apartment with id: {apartmentId} is not found."));
 
-            await _unitOfWork.LeasingAgreements.AddAsync(newLeasingAgreement);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+                var leasingAgreementService = new LeasingAgreementService();
+                (LeasingAgreement leasingAgreement, LeasingRecord leasingRecord) = leasingAgreementService.CreateLeasingAgreement(
+                    tenantName,
+                    tenantEmail,
+                    tenantContactNumber,
+                    owner,
+                    apartmentToLease);              
 
-            return _mapper.Map<LeasingAgreementResponse>(newLeasingAgreement);
+                await _unitOfWork.LeasingAgreements.AddAsync(leasingAgreement);
+                await _unitOfWork.LeasingRecords.AddAsync(leasingRecord);
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                return Result.Ok();
+            }
+            catch (ApartmentAlreadyOccupiedException ex)
+            {
+                return Result.Fail(new ApartmentAlreadyOccupiedError(ex.Message));
+            }           
         }
     }
 }

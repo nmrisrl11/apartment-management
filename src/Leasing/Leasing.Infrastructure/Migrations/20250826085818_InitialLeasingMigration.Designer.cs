@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leasing.Infrastructure.Migrations
 {
     [DbContext(typeof(LeasingDbContext))]
-    [Migration("20250823082852_InitialLeasingMigration")]
+    [Migration("20250826085818_InitialLeasingMigration")]
     partial class InitialLeasingMigration
     {
         /// <inheritdoc />
@@ -102,6 +102,9 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("TenantId")
                         .HasColumnType("uniqueidentifier");

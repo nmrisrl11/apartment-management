@@ -1,7 +1,10 @@
-﻿using Leasing.Application.Commands;
+﻿using FluentResults;
+using Leasing.Application.Commands;
+using Leasing.Application.Errors;
 using Leasing.Application.Queries;
 using Leasing.Application.Response;
 using Leasing.Controllers.Request.LeasingAgreement;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Leasing.Controllers
@@ -42,19 +45,28 @@ namespace Leasing.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<LeasingAgreementResponse>> CreateLeasingAgreement([FromBody] CreateLeasingAgreementRequest request)
+        public async Task<ActionResult> CreateLeasingAgreement([FromBody] CreateLeasingAgreementRequest request)
         {
-            LeasingAgreementResponse leasingAgreementToCreate = await _commands.AddAsync(
-                request.TenantName,
+            Result result = await _commands.AddAsync(request.TenantName,
                 request.TenantEmail,
                 request.TenantContactNumber,
                 request.OwnerId,
                 request.ApartmentId,
-                DateTime.UtcNow,
-                DateTime.UtcNow.AddDays(30),
                 HttpContext.RequestAborted);
+            
+            if (result.IsFailed)
+            {
+                var error = result.Errors.First();
 
-            return Ok(leasingAgreementToCreate);
+                return error switch
+                {
+                    NotFoundError => NotFound(error.Message),
+                    ApartmentAlreadyOccupiedError => Conflict(error.Message),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
+                };
+            }
+
+            return Ok();
         }
     }
 }

@@ -113,7 +113,8 @@ namespace Leasing.Infrastructure.Migrations
                     OwnerId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     DateLeased = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateRenewal = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateRenewal = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

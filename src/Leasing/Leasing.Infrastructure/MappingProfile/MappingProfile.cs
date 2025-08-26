@@ -27,7 +27,8 @@ namespace Leasing.Infrastructure.MappingProfile
 
             // Mapping for Apartment Leasing History
             CreateMap<LeasingRecord, ApartmentLeasingRecordResponse>()
-                .ForMember(lr => lr.Id, options => options.MapFrom(lr => lr.Id.Value));
+                .ForMember(lr => lr.Id, options => options.MapFrom(lr => lr.Id.Value))
+                .ForMember(lr => lr.Lessee, options => options.MapFrom(lr => lr.Tenant));
             CreateMap<Tenant, ApartmentLesseeResponse>()
                 .ForMember(t => t.Id, options => options.MapFrom(t => t.Id.Value));
 
@@ -35,7 +36,9 @@ namespace Leasing.Infrastructure.MappingProfile
             CreateMap<LeasingRecord, TenantLeasingRecordResponse>()
                 .ForMember(lr => lr.Id, options => options.MapFrom(lr => lr.Id.Value));
             CreateMap<Apartment, ApartmentLeasedResponse>()
-                .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value));
+                .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value))
+                .ForMember(a => a.OwnerId, options => options.MapFrom(a => a.OwnerId.Value))
+                .ForMember(a => a.Owner, options => options.MapFrom(a => a.Owner));
 
             // Mapping for Owner
             CreateMap<Owner, OwnerResponse>()

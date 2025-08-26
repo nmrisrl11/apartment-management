@@ -1,5 +1,4 @@
-﻿using Leasing.Domain.Entities;
-using Leasing.Domain.ValueObjects;
+﻿using Leasing.Domain.ValueObjects;
 
 namespace Leasing.Application.Response
 {
@@ -15,8 +14,8 @@ namespace Leasing.Application.Response
     public class ApartmentLeasedResponse
     {
         public Guid Id { get; set; }
-        public OwnerId OwnerId { get; set; } = null!;
-        public Owner Owner { get; set; } = null!;
+        public Guid OwnerId { get; set; }
+        public OwnerResponse Owner { get; set; } = null!;
         public string BuildingNumber { get; set; } = string.Empty;
         public string ApartmentNumber { get; set; } = string.Empty;
     }
