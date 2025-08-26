@@ -11,7 +11,7 @@ namespace Leasing.Domain.Services
             Owner owner,
             Apartment apartment)
         {
-            var DateLeased = DateTime.Now;
+            var DateLeased = DateTime.UtcNow;
             var DateRenewal = DateLeased.AddDays(30);
 
             // Create Tenant
@@ -39,6 +39,13 @@ namespace Leasing.Domain.Services
                 DateRenewal);
 
             return (newLeasingAgreement, newLeasingRecord);
+        }
+
+        public void RenewLeasingAgreement(LeasingAgreement leasingAgreement, LeasingRecord leasingRecord)
+        {
+            leasingAgreement.Renew();
+            leasingAgreement.DateRenewal.AddDays(30);
+            leasingRecord.DateRenewal.AddDays(30);
         }
     }
 }

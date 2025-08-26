@@ -3,6 +3,7 @@
     public interface IUnitOfWork
     {
         ILeasingAgreementRepository LeasingAgreements { get; }
+        ITenantRepository Tenants { get; }
         IOwnerRepository Owners { get; }
         IApartmentRepository Apartments { get; }
         ILeasingRecordRepository LeasingRecords { get; }

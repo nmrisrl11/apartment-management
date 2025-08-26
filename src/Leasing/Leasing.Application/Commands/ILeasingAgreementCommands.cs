@@ -12,5 +12,12 @@ namespace Leasing.Application.Commands
             Guid ownerId,
             Guid apartmentId,
             CancellationToken cancellationToken);
+
+        Task<Result> RenewAsync(
+            Guid leasingAgreementId,
+            Guid tenantId,
+            Guid ownerId,
+            Guid apartmentId,
+            CancellationToken cancellationToken);
     }
 }
