@@ -44,8 +44,7 @@ namespace Leasing.Domain.Services
         public void RenewLeasingAgreement(LeasingAgreement leasingAgreement, LeasingRecord leasingRecord)
         {
             leasingAgreement.Renew();
-            leasingAgreement.DateRenewal.AddDays(30);
-            leasingRecord.DateRenewal.AddDays(30);
+            leasingRecord.AdjustDateRenewal();
         }
     }
 }

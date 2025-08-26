@@ -56,6 +56,7 @@ namespace Leasing.Domain.Entities
         public void Renew()
         {
             Status = AgreementStatus.RENEWED;
+            DateRenewal = DateRenewal.AddDays(30);
         }
     }
 }
