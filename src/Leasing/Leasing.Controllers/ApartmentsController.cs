@@ -46,7 +46,14 @@ namespace Leasing.Controllers
         [HttpPost()]
         public async Task<ActionResult<ApartmentResponse>> CreateApartment(CreateApartmentRequest request)
         {
-            ApartmentResponse apartmentToCreate = await _commands.AddAsync(request.OwnerId, request.BuildingNumber, request.ApartmentNumber, HttpContext.RequestAborted);
+            Result<ApartmentResponse> result = await _commands.AddAsync(request.LessorId, request.BuildingNumber, request.ApartmentNumber, HttpContext.RequestAborted);
+
+            if (result.IsFailed)
+            {
+                return NotFound(result.Errors.FirstOrDefault()?.Message);
+            }
+
+            ApartmentResponse apartmentToCreate = result.Value;
 
             return CreatedAtRoute(nameof(GetApartmentById), new { apartmentToCreate.Id }, apartmentToCreate);
         }

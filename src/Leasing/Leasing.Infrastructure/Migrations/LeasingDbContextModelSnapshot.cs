@@ -36,7 +36,7 @@ namespace Leasing.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("OwnerId")
+                    b.Property<Guid?>("LessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -44,7 +44,7 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("LessorId");
 
                     b.ToTable("Apartments", "Leasing");
                 });
@@ -63,7 +63,7 @@ namespace Leasing.Infrastructure.Migrations
                     b.Property<DateTime>("DateRenewal")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid>("LessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -76,7 +76,7 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.HasIndex("ApartmentId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("LessorId");
 
                     b.HasIndex("TenantId");
 
@@ -97,7 +97,7 @@ namespace Leasing.Infrastructure.Migrations
                     b.Property<DateTime>("DateRenewal")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("OwnerId")
+                    b.Property<Guid>("LessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
@@ -110,14 +110,14 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.HasIndex("ApartmentId");
 
-                    b.HasIndex("OwnerId");
+                    b.HasIndex("LessorId");
 
                     b.HasIndex("TenantId");
 
                     b.ToTable("LeasingRecords", "Leasing");
                 });
 
-            modelBuilder.Entity("Leasing.Domain.Entities.Owner", b =>
+            modelBuilder.Entity("Leasing.Domain.Entities.Lessor", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -128,7 +128,7 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Owners", "Leasing");
+                    b.ToTable("Lessors", "Leasing");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.Tenant", b =>
@@ -155,11 +155,11 @@ namespace Leasing.Infrastructure.Migrations
 
             modelBuilder.Entity("Leasing.Domain.Entities.Apartment", b =>
                 {
-                    b.HasOne("Leasing.Domain.Entities.Owner", "Owner")
+                    b.HasOne("Leasing.Domain.Entities.Lessor", "Lessor")
                         .WithMany()
-                        .HasForeignKey("OwnerId");
+                        .HasForeignKey("LessorId");
 
-                    b.Navigation("Owner");
+                    b.Navigation("Lessor");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.LeasingAgreement", b =>
@@ -170,9 +170,9 @@ namespace Leasing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Leasing.Domain.Entities.Owner", "Owner")
+                    b.HasOne("Leasing.Domain.Entities.Lessor", "Lessor")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("LessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -184,7 +184,7 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.Navigation("Apartment");
 
-                    b.Navigation("Owner");
+                    b.Navigation("Lessor");
 
                     b.Navigation("Tenant");
                 });
@@ -197,9 +197,9 @@ namespace Leasing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Leasing.Domain.Entities.Owner", "Owner")
+                    b.HasOne("Leasing.Domain.Entities.Lessor", "Lessor")
                         .WithMany()
-                        .HasForeignKey("OwnerId")
+                        .HasForeignKey("LessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -211,7 +211,7 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.Navigation("Apartment");
 
-                    b.Navigation("Owner");
+                    b.Navigation("Lessor");
 
                     b.Navigation("Tenant");
                 });

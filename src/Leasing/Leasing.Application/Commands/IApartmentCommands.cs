@@ -5,7 +5,7 @@ namespace Leasing.Application.Commands
 {
     public interface IApartmentCommands
     {
-        Task<ApartmentResponse> AddAsync(Guid ownerId, string buildingNumber, string apartmentNumber, CancellationToken cancellationToken);
+        Task<Result<ApartmentResponse>> AddAsync(Guid lessorId, string buildingNumber, string apartmentNumber, CancellationToken cancellationToken);
         Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken);
         Task<Result> UpdateAsync(Guid id, string buildingNumber, string apartmentNumber, CancellationToken cancellationToken);
     }

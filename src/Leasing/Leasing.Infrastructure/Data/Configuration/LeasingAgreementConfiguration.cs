@@ -9,15 +9,15 @@ namespace Leasing.Infrastructure.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<LeasingAgreement> leasingAgreement)
         {
-            leasingAgreement.HasKey(t => t.Id);
-            leasingAgreement.Property(t => t.Id).IsRequired()
-                .HasConversion(t => t.Value, value => new LeasingAgreementId(value));
-            leasingAgreement.Property(lr => lr.TenantId)
-                .HasConversion(lr => lr.Value, value => new TenantId(value));
-            leasingAgreement.Property(lr => lr.OwnerId)
-                .HasConversion(lr => lr.Value, value => new OwnerId(value));
-            leasingAgreement.Property(lr => lr.ApartmentId)
-                .HasConversion(lr => lr.Value, value => new ApartmentId(value));
+            leasingAgreement.HasKey(la => la.Id);
+            leasingAgreement.Property(la => la.Id).IsRequired()
+                .HasConversion(la => la.Value, value => new LeasingAgreementId(value));
+            leasingAgreement.Property(la => la.TenantId)
+                .HasConversion(la => la.Value, value => new TenantId(value));
+            leasingAgreement.Property(la => la.LessorId)
+                .HasConversion(la => la.Value, value => new LessorId(value));
+            leasingAgreement.Property(la => la.ApartmentId)
+                .HasConversion(la => la.Value, value => new ApartmentId(value));
         }
     }
 }

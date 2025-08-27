@@ -50,7 +50,7 @@ namespace Leasing.Controllers
             Result result = await _commands.AddAsync(request.TenantName,
                 request.TenantEmail,
                 request.TenantContactNumber,
-                request.OwnerId,
+                request.LessorId,
                 request.ApartmentId,
                 HttpContext.RequestAborted);
             
@@ -76,7 +76,7 @@ namespace Leasing.Controllers
             Result result = await _commands.RenewAsync(
                 request.LeasingAgreementId,
                 request.TenantId,
-                request.OwnerId,
+                request.LessorId,
                 request.ApartmentId,
                 HttpContext.RequestAborted);
 

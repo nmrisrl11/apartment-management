@@ -21,17 +21,22 @@ namespace Leasing.Application.CommandHandler
             _mapper = mapper;
         }
 
-        public async Task<ApartmentResponse> AddAsync(Guid ownerId, string buildingNumber, string apartmentNumber, CancellationToken cancellationToken)
+        public async Task<Result<ApartmentResponse>> AddAsync(Guid lessorId, string buildingNumber, string apartmentNumber, CancellationToken cancellationToken)
         {
+            Lessor? lessor = await _unitOfWork.Lessors.GetByIdAsync(new LessorId(lessorId));
+
+            if (lessor is null)
+                return Result.Fail(new NotFoundError($"Lessor with id: {lessorId} is not found."));
+
             Apartment apartment = Apartment.Create(
-                new OwnerId(ownerId),
+                new LessorId(lessorId),
                 buildingNumber,
                 apartmentNumber);
 
             await _unitOfWork.Apartments.AddAsync(apartment);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return _mapper.Map<ApartmentResponse>(apartment);
+            return Result.Ok(_mapper.Map<ApartmentResponse>(apartment));
         }
 
         public async Task<Result> DeleteAsync(Guid id, CancellationToken cancellationToken)

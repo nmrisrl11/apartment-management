@@ -7,8 +7,8 @@ namespace Leasing.Domain.Entities
     public class Apartment
     {
         public ApartmentId Id { get; private set; } = null!;
-        public OwnerId OwnerId { get; private set; } = null!;
-        public Owner Owner { get; private set; } = null!;
+        public LessorId LessorId { get; private set; } = null!;
+        public Lessor Lessor { get; private set; } = null!;
         public string BuildingNumber { get; private set; } = null!;
         public string ApartmentNumber { get; private set; } = null!;
         public ApartmentStatus Status { get; private set; }
@@ -17,14 +17,14 @@ namespace Leasing.Domain.Entities
         protected Apartment() { }
 
         public static Apartment Create(
-            OwnerId ownerId,
+            LessorId lessorId,
             string buildingNumber,
             string apartmentNumber)
         {
             return new Apartment
             {
                 Id = new ApartmentId(Guid.NewGuid()),
-                OwnerId = ownerId,
+                LessorId = lessorId,
                 BuildingNumber = buildingNumber,
                 ApartmentNumber = apartmentNumber,
                 Status = ApartmentStatus.VACANT

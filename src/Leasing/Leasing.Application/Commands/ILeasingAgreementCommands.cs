@@ -9,14 +9,14 @@ namespace Leasing.Application.Commands
             string tenantName,
             string tenantEmail,
             string tenantContactNumber,
-            Guid ownerId,
+            Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken);
 
         Task<Result> RenewAsync(
             Guid leasingAgreementId,
             Guid tenantId,
-            Guid ownerId,
+            Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken);
     }

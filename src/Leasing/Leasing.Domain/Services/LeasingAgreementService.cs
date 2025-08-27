@@ -8,7 +8,7 @@ namespace Leasing.Domain.Services
             string tenantName,
             string tenantEmail,
             string tenantContactNumber,
-            Owner owner,
+            Lessor lessor,
             Apartment apartment)
         {
             var DateLeased = DateTime.UtcNow;
@@ -25,7 +25,7 @@ namespace Leasing.Domain.Services
             // Create Leasing Record
             var newLeasingRecord = LeasingRecord.Create(
                 newTenant.Id,
-                owner.Id,
+                lessor.Id,
                 apartment.Id,
                 DateLeased,
                 DateRenewal);
@@ -33,7 +33,7 @@ namespace Leasing.Domain.Services
             // Create Leasing Agreement
             var newLeasingAgreement = LeasingAgreement.Create(
                 newTenant,
-                owner.Id,
+                lessor.Id,
                 apartment.Id,
                 DateLeased,
                 DateRenewal);

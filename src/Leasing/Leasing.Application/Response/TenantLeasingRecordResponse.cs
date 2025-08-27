@@ -14,8 +14,8 @@ namespace Leasing.Application.Response
     public class ApartmentLeasedResponse
     {
         public Guid Id { get; set; }
-        public Guid OwnerId { get; set; }
-        public OwnerResponse Owner { get; set; } = null!;
+        public Guid LessorId { get; set; }
+        public LessorResponse Lessor { get; set; } = null!;
         public string BuildingNumber { get; set; } = string.Empty;
         public string ApartmentNumber { get; set; } = string.Empty;
     }

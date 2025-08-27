@@ -27,16 +27,16 @@ namespace Leasing.Application.CommandHandler
             string tenantName,
             string tenantEmail,
             string tenantContactNumber,
-            Guid ownerId,
+            Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken)
         {
             try
             {
-                Owner? owner = await _unitOfWork.Owners.GetByIdAsync(new OwnerId(ownerId));
+                Lessor? lessor = await _unitOfWork.Lessors.GetByIdAsync(new LessorId(lessorId));
 
-                if (owner is null)
-                    return Result.Fail(new NotFoundError($"Owner with id: {apartmentId} is not found."));
+                if (lessor is null)
+                    return Result.Fail(new NotFoundError($"Lessor with id: {apartmentId} is not found."));
 
                 Apartment? apartmentToLease = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
 
@@ -48,7 +48,7 @@ namespace Leasing.Application.CommandHandler
                     tenantName,
                     tenantEmail,
                     tenantContactNumber,
-                    owner,
+                    lessor,
                     apartmentToLease);              
 
                 await _unitOfWork.LeasingAgreements.AddAsync(leasingAgreement);
@@ -70,7 +70,7 @@ namespace Leasing.Application.CommandHandler
         public async Task<Result> RenewAsync(
             Guid leasingAgreementId,
             Guid tenantId,
-            Guid ownerId,
+            Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken)
         {
@@ -82,18 +82,18 @@ namespace Leasing.Application.CommandHandler
             if (tenant is null)
                 return Result.Fail(new NotFoundError($"Tenant with id: {apartmentId} is not found."));
 
-            Owner? owner = await _unitOfWork.Owners.GetByIdAsync(new OwnerId(ownerId));
-            if (owner is null)
-                return Result.Fail(new NotFoundError($"Owner with id: {apartmentId} is not found."));
+            Lessor? lessor = await _unitOfWork.Lessors.GetByIdAsync(new LessorId(lessorId));
+            if (lessor is null)
+                return Result.Fail(new NotFoundError($"Lessor with id: {apartmentId} is not found."));
 
             Apartment? apartmentToLease = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
             if (apartmentToLease is null)
                 return Result.Fail(new NotFoundError($"Apartment with id: {apartmentId} is not found."));
 
-            LeasingRecord? leasingRecord = await _unitOfWork.LeasingRecords.GetByIdsAsync(new TenantId(tenantId), new OwnerId(ownerId), new ApartmentId(apartmentId));
+            LeasingRecord? leasingRecord = await _unitOfWork.LeasingRecords.GetByIdsAsync(new TenantId(tenantId), new LessorId(lessorId), new ApartmentId(apartmentId));
 
             if (leasingRecord is null)
-                return Result.Fail(new NotFoundError($"Leasing Record not found for tenant {tenantId}, owner {ownerId} and apartment {apartmentId}."));
+                return Result.Fail(new NotFoundError($"No leasing record found for tenant ID {tenantId}, lessor ID {lessorId}, and apartment ID {apartmentId}."));
 
             var leasingAgreementService = new LeasingAgreementService();
             leasingAgreementService.RenewLeasingAgreement(leasingAgreementToRenew, leasingRecord);

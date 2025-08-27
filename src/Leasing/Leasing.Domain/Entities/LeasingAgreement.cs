@@ -8,8 +8,8 @@ namespace Leasing.Domain.Entities
         public LeasingAgreementId Id { get; private set; } = null!;
         public TenantId TenantId { get; private set; } = null!;
         public Tenant Tenant { get; private set; } = null!;
-        public OwnerId OwnerId { get; private set; } = null!;
-        public Owner Owner { get; private set; } = null!;
+        public LessorId LessorId { get; private set; } = null!;
+        public Lessor Lessor { get; private set; } = null!;
         public ApartmentId ApartmentId { get; private set; } = null!;
         public Apartment Apartment { get; private set; } = null!;
         public  AgreementStatus Status { get; private set; }
@@ -22,7 +22,7 @@ namespace Leasing.Domain.Entities
         private LeasingAgreement(
             LeasingAgreementId id,
             Tenant tenant,
-            OwnerId ownerId,
+            LessorId lessorId,
             ApartmentId apartmentId,
             DateTime dateLeased,
             DateTime dateRenewal)
@@ -30,7 +30,7 @@ namespace Leasing.Domain.Entities
             Id = id;
             TenantId = tenant.Id;
             Tenant = tenant;
-            OwnerId = ownerId;
+            LessorId = lessorId;
             ApartmentId = apartmentId;
             Status = AgreementStatus.NEW;
             DateLeased = dateLeased;
@@ -39,7 +39,7 @@ namespace Leasing.Domain.Entities
 
         public static LeasingAgreement Create(
             Tenant newTenant,
-            OwnerId ownerId,
+            LessorId lessorId,
             ApartmentId apartmentId,
             DateTime dateLeased,
             DateTime dateRenewal)
@@ -47,7 +47,7 @@ namespace Leasing.Domain.Entities
             return new LeasingAgreement(
                 id: new LeasingAgreementId(Guid.NewGuid()),
                 tenant: newTenant,
-                ownerId: ownerId,
+                lessorId: lessorId,
                 apartmentId: apartmentId,
                 dateLeased: dateLeased,
                 dateRenewal: dateRenewal);
