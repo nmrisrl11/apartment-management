@@ -47,9 +47,8 @@ namespace Leasing.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateLeasingAgreement([FromBody] CreateLeasingAgreementRequest request)
         {
-            Result result = await _commands.AddAsync(request.TenantName,
-                request.TenantEmail,
-                request.TenantContactNumber,
+            Result result = await _commands.AddAsync(
+                request.LesseeId,
                 request.LessorId,
                 request.ApartmentId,
                 HttpContext.RequestAborted);
@@ -75,7 +74,7 @@ namespace Leasing.Controllers
         {
             Result result = await _commands.RenewAsync(
                 request.LeasingAgreementId,
-                request.TenantId,
+                request.LesseeId,
                 request.LessorId,
                 request.ApartmentId,
                 HttpContext.RequestAborted);

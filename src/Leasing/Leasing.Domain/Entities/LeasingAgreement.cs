@@ -6,8 +6,8 @@ namespace Leasing.Domain.Entities
     public class LeasingAgreement
     {
         public LeasingAgreementId Id { get; private set; } = null!;
-        public TenantId TenantId { get; private set; } = null!;
-        public Tenant Tenant { get; private set; } = null!;
+        public LesseeId LesseeId { get; private set; } = null!;
+        public Lessee Lessee { get; private set; } = null!;
         public LessorId LessorId { get; private set; } = null!;
         public Lessor Lessor { get; private set; } = null!;
         public ApartmentId ApartmentId { get; private set; } = null!;
@@ -21,15 +21,14 @@ namespace Leasing.Domain.Entities
         // Private constructor for internal use by the static factory method
         private LeasingAgreement(
             LeasingAgreementId id,
-            Tenant tenant,
+            LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
             DateTime dateLeased,
             DateTime dateRenewal)
         {
             Id = id;
-            TenantId = tenant.Id;
-            Tenant = tenant;
+            LesseeId = lesseeId;
             LessorId = lessorId;
             ApartmentId = apartmentId;
             Status = AgreementStatus.NEW;
@@ -38,7 +37,7 @@ namespace Leasing.Domain.Entities
         }
 
         public static LeasingAgreement Create(
-            Tenant newTenant,
+            LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
             DateTime dateLeased,
@@ -46,7 +45,7 @@ namespace Leasing.Domain.Entities
         {
             return new LeasingAgreement(
                 id: new LeasingAgreementId(Guid.NewGuid()),
-                tenant: newTenant,
+                lesseeId: lesseeId,
                 lessorId: lessorId,
                 apartmentId: apartmentId,
                 dateLeased: dateLeased,

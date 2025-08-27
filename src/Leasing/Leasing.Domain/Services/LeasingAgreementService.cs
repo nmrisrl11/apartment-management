@@ -5,26 +5,18 @@ namespace Leasing.Domain.Services
     public class LeasingAgreementService
     {
         public (LeasingAgreement, LeasingRecord) CreateLeasingAgreement(
-            string tenantName,
-            string tenantEmail,
-            string tenantContactNumber,
+            Lessee lessee,
             Lessor lessor,
             Apartment apartment)
         {
             var DateLeased = DateTime.UtcNow;
             var DateRenewal = DateLeased.AddDays(30);
 
-            // Create Tenant
-            var newTenant = Tenant.Create(
-                name: tenantName,
-                email: tenantEmail,
-                contactNumber: tenantContactNumber);
-
             apartment.MarkAsOccupied();
 
             // Create Leasing Record
             var newLeasingRecord = LeasingRecord.Create(
-                newTenant.Id,
+                lessee.Id,
                 lessor.Id,
                 apartment.Id,
                 DateLeased,
@@ -32,7 +24,7 @@ namespace Leasing.Domain.Services
 
             // Create Leasing Agreement
             var newLeasingAgreement = LeasingAgreement.Create(
-                newTenant,
+                lessee.Id,
                 lessor.Id,
                 apartment.Id,
                 DateLeased,

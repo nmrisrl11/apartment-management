@@ -1,4 +1,4 @@
 ﻿namespace Leasing.Domain.ValueObjects
 {
-    public record TenantId(Guid Value);
+    public record LesseeId(Guid Value);
 }

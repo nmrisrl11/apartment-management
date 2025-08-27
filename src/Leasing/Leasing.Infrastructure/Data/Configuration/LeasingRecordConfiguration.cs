@@ -12,8 +12,8 @@ namespace Leasing.Infrastructure.Data.Configuration
             leasingRecord.HasKey(lr => lr.Id);
             leasingRecord.Property(lr => lr.Id)
                 .HasConversion(lr => lr.Value, value => new LeasingRecordId(value));
-            leasingRecord.Property(lr => lr.TenantId)
-                .HasConversion(lr => lr.Value, value => new TenantId(value));
+            leasingRecord.Property(lr => lr.LesseeId)
+                .HasConversion(lr => lr.Value, value => new LesseeId(value));
             leasingRecord.Property(lr => lr.LessorId)
                 .HasConversion(lr => lr.Value, value => new LessorId(value));
             leasingRecord.Property(lr => lr.ApartmentId)

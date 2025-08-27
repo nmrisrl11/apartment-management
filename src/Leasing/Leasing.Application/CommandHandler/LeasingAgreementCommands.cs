@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.Execution;
 using FluentResults;
 using Leasing.Application.Commands;
 using Leasing.Application.Errors;
@@ -8,7 +7,6 @@ using Leasing.Domain.Exceptions;
 using Leasing.Domain.Repositories;
 using Leasing.Domain.Services;
 using Leasing.Domain.ValueObjects;
-using System.Net;
 
 namespace Leasing.Application.CommandHandler
 {
@@ -24,19 +22,22 @@ namespace Leasing.Application.CommandHandler
         }
 
         public async Task<Result> AddAsync(
-            string tenantName,
-            string tenantEmail,
-            string tenantContactNumber,
+            Guid lesseeId,
             Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken)
         {
             try
             {
+                Lessee? lessee = await _unitOfWork.Lessees.GetByIdAsync(new LesseeId(lesseeId));
+
+                if (lessee is null)
+                    return Result.Fail(new NotFoundError($"Lessee with id: {lesseeId} is not found."));
+
                 Lessor? lessor = await _unitOfWork.Lessors.GetByIdAsync(new LessorId(lessorId));
 
                 if (lessor is null)
-                    return Result.Fail(new NotFoundError($"Lessor with id: {apartmentId} is not found."));
+                    return Result.Fail(new NotFoundError($"Lessor with id: {lessorId} is not found."));
 
                 Apartment? apartmentToLease = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
 
@@ -45,9 +46,7 @@ namespace Leasing.Application.CommandHandler
 
                 var leasingAgreementService = new LeasingAgreementService();
                 (LeasingAgreement leasingAgreement, LeasingRecord leasingRecord) = leasingAgreementService.CreateLeasingAgreement(
-                    tenantName,
-                    tenantEmail,
-                    tenantContactNumber,
+                    lessee,
                     lessor,
                     apartmentToLease);              
 
@@ -69,7 +68,7 @@ namespace Leasing.Application.CommandHandler
 
         public async Task<Result> RenewAsync(
             Guid leasingAgreementId,
-            Guid tenantId,
+            Guid lesseeId,
             Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken)
@@ -78,9 +77,9 @@ namespace Leasing.Application.CommandHandler
             if (leasingAgreementToRenew is null)
                 return Result.Fail(new NotFoundError($"Leasing Agreement with id: {leasingAgreementId} is not found."));
 
-            Tenant? tenant = await _unitOfWork.Tenants.GetByIdAsync(new TenantId(tenantId));
-            if (tenant is null)
-                return Result.Fail(new NotFoundError($"Tenant with id: {apartmentId} is not found."));
+            Lessee? lessee = await _unitOfWork.Lessees.GetByIdAsync(new LesseeId(lesseeId));
+            if (lessee is null)
+                return Result.Fail(new NotFoundError($"Lessee with id: {apartmentId} is not found."));
 
             Lessor? lessor = await _unitOfWork.Lessors.GetByIdAsync(new LessorId(lessorId));
             if (lessor is null)
@@ -90,10 +89,10 @@ namespace Leasing.Application.CommandHandler
             if (apartmentToLease is null)
                 return Result.Fail(new NotFoundError($"Apartment with id: {apartmentId} is not found."));
 
-            LeasingRecord? leasingRecord = await _unitOfWork.LeasingRecords.GetByIdsAsync(new TenantId(tenantId), new LessorId(lessorId), new ApartmentId(apartmentId));
+            LeasingRecord? leasingRecord = await _unitOfWork.LeasingRecords.GetByIdsAsync(new LesseeId(lesseeId), new LessorId(lessorId), new ApartmentId(apartmentId));
 
             if (leasingRecord is null)
-                return Result.Fail(new NotFoundError($"No leasing record found for tenant ID {tenantId}, lessor ID {lessorId}, and apartment ID {apartmentId}."));
+                return Result.Fail(new NotFoundError($"No leasing record found for lessee ID {lesseeId}, lessor ID {lessorId}, and apartment ID {apartmentId}."));
 
             var leasingAgreementService = new LeasingAgreementService();
             leasingAgreementService.RenewLeasingAgreement(leasingAgreementToRenew, leasingRecord);

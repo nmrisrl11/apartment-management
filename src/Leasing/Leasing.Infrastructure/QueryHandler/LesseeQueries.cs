@@ -8,27 +8,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Leasing.Infrastructure.QueryHandler
 {
-    public class TenantQueries : ITenantQueries
+    public class LesseeQueries : ILesseeQueries
     {
         private readonly LeasingDbContext _context;
         private readonly IMapper _mapper;
 
-        public TenantQueries(LeasingDbContext context, IMapper mapper)
+        public LesseeQueries(LeasingDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<List<TenantResponse>> GetAllAsync()
+        public async Task<List<LesseeResponse>> GetAllAsync()
         {
-            return await _context.Tenants.ProjectTo<TenantResponse>(_mapper.ConfigurationProvider).ToListAsync();
+            return await _context.Lessees.ProjectTo<LesseeResponse>(_mapper.ConfigurationProvider).ToListAsync();
         }
 
-        public async Task<TenantResponse?> GetByIdAsync(Guid id)
+        public async Task<LesseeResponse?> GetByIdAsync(Guid id)
         {
-            return await _context.Tenants
-                .Where(t => t.Id == new TenantId(id))
-                .ProjectTo<TenantResponse>(_mapper.ConfigurationProvider)
+            return await _context.Lessees
+                .Where(l => l.Id == new LesseeId(id))
+                .ProjectTo<LesseeResponse>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
         }
     }

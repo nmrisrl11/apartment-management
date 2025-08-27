@@ -6,7 +6,7 @@ namespace Leasing.Infrastructure.Data.Repositories
     {
         private readonly LeasingDbContext _context;
         private readonly ILeasingAgreementRepository _leasingAgreementRepository;
-        private readonly ITenantRepository _tenantRepository;
+        private readonly ILesseeRepository _lesseeRepository;
         private readonly IApartmentRepository _apartmentRepository;
         private readonly ILeasingRecordRepository _leasingRecordRepository;
         private readonly ILessorRepository _lessorRepository;
@@ -14,21 +14,21 @@ namespace Leasing.Infrastructure.Data.Repositories
         public UnitOfWork(
             LeasingDbContext context,
             ILeasingAgreementRepository leasingAgreementRepository,
-            ITenantRepository tenantRepository,
+            ILesseeRepository lesseeRepository,
             IApartmentRepository apartmentRepository,
             ILeasingRecordRepository leasingRecordRepository,
             ILessorRepository lessorRepository)
         {
             _context = context;
             _leasingAgreementRepository = leasingAgreementRepository;
-            _tenantRepository = tenantRepository;
+            _lesseeRepository = lesseeRepository;
             _apartmentRepository = apartmentRepository;
             _leasingRecordRepository = leasingRecordRepository;
             _lessorRepository = lessorRepository;
         }
 
         public ILeasingAgreementRepository LeasingAgreements => _leasingAgreementRepository;
-        public ITenantRepository Tenants => _tenantRepository;
+        public ILesseeRepository Lessees => _lesseeRepository;
         public IApartmentRepository Apartments => _apartmentRepository;
         public ILeasingRecordRepository LeasingRecords => _leasingRecordRepository;
         public ILessorRepository Lessors => _lessorRepository;

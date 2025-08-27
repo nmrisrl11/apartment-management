@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leasing.Infrastructure.Migrations
 {
     [DbContext(typeof(LeasingDbContext))]
-    [Migration("20250827064116_InitialLeasingMigration")]
+    [Migration("20250827164810_InitialLeasingMigration")]
     partial class InitialLeasingMigration
     {
         /// <inheritdoc />
@@ -66,22 +66,22 @@ namespace Leasing.Infrastructure.Migrations
                     b.Property<DateTime>("DateRenewal")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("LesseeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("LessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApartmentId");
 
-                    b.HasIndex("LessorId");
+                    b.HasIndex("LesseeId");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("LessorId");
 
                     b.ToTable("LeasingAgreements", "Leasing");
                 });
@@ -100,41 +100,27 @@ namespace Leasing.Infrastructure.Migrations
                     b.Property<DateTime>("DateRenewal")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("LesseeId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("LessorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TenantId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ApartmentId");
 
-                    b.HasIndex("LessorId");
+                    b.HasIndex("LesseeId");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("LessorId");
 
                     b.ToTable("LeasingRecords", "Leasing");
                 });
 
-            modelBuilder.Entity("Leasing.Domain.Entities.Lessor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Lessors", "Leasing");
-                });
-
-            modelBuilder.Entity("Leasing.Domain.Entities.Tenant", b =>
+            modelBuilder.Entity("Leasing.Domain.Entities.Lessee", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
@@ -153,7 +139,21 @@ namespace Leasing.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenants", "Leasing");
+                    b.ToTable("Lessees", "Leasing");
+                });
+
+            modelBuilder.Entity("Leasing.Domain.Entities.Lessor", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Lessors", "Leasing");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.Apartment", b =>
@@ -173,23 +173,23 @@ namespace Leasing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Leasing.Domain.Entities.Lessee", "Lessee")
+                        .WithMany()
+                        .HasForeignKey("LesseeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Leasing.Domain.Entities.Lessor", "Lessor")
                         .WithMany()
                         .HasForeignKey("LessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Leasing.Domain.Entities.Tenant", "Tenant")
-                        .WithMany()
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Apartment");
 
-                    b.Navigation("Lessor");
+                    b.Navigation("Lessee");
 
-                    b.Navigation("Tenant");
+                    b.Navigation("Lessor");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.LeasingRecord", b =>
@@ -200,23 +200,23 @@ namespace Leasing.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Leasing.Domain.Entities.Lessee", "Lessee")
+                        .WithMany("LeasingHistory")
+                        .HasForeignKey("LesseeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Leasing.Domain.Entities.Lessor", "Lessor")
                         .WithMany()
                         .HasForeignKey("LessorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Leasing.Domain.Entities.Tenant", "Tenant")
-                        .WithMany("LeasingHistory")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Apartment");
 
-                    b.Navigation("Lessor");
+                    b.Navigation("Lessee");
 
-                    b.Navigation("Tenant");
+                    b.Navigation("Lessor");
                 });
 
             modelBuilder.Entity("Leasing.Domain.Entities.Apartment", b =>
@@ -224,7 +224,7 @@ namespace Leasing.Infrastructure.Migrations
                     b.Navigation("LeasingHistory");
                 });
 
-            modelBuilder.Entity("Leasing.Domain.Entities.Tenant", b =>
+            modelBuilder.Entity("Leasing.Domain.Entities.Lessee", b =>
                 {
                     b.Navigation("LeasingHistory");
                 });

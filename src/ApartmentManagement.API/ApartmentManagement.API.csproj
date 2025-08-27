@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -24,6 +24,9 @@
     <ProjectReference Include="..\Ownership\Ownership.Application\Ownership.Application.csproj" />
     <ProjectReference Include="..\Ownership\Ownership.Controllers\Ownership.Controllers.csproj" />
     <ProjectReference Include="..\Ownership\Ownership.Infrastructure\Ownership.Infrastructure.csproj" />
+    <ProjectReference Include="..\Tenancy\Tenancy.Application\Tenancy.Application.csproj" />
+    <ProjectReference Include="..\Tenancy\Tenancy.Controllers\Tenancy.Controllers.csproj" />
+    <ProjectReference Include="..\Tenancy\Tenancy.Infrastructure\Tenancy.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,6 +9,7 @@ namespace Leasing.Application
         public static IServiceCollection AddLeasingApplication(this IServiceCollection services)
         {
             services.AddScoped<ILeasingAgreementCommands, LeasingAgreementCommands>();
+            services.AddScoped<ILesseeCommands, LesseeCommands>();
             services.AddScoped<ILessorCommands, LessorCommands>();
             services.AddScoped<IApartmentCommands, ApartmentCommands>();
 

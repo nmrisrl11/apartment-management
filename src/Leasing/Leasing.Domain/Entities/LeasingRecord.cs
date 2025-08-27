@@ -7,8 +7,8 @@ namespace Leasing.Domain.Entities
     public class LeasingRecord
     {
         public LeasingRecordId Id { get; private set; } = null!;
-        public TenantId TenantId { get; private set; } = null!;
-        public Tenant Tenant { get; private set; } = null!;
+        public LesseeId LesseeId { get; private set; } = null!;
+        public Lessee Lessee { get; private set; } = null!;
         public LessorId LessorId { get; private set; } = null!;
         public Lessor Lessor { get; private set; } = null!;
         public ApartmentId ApartmentId { get; private set; } = null!;
@@ -18,14 +18,14 @@ namespace Leasing.Domain.Entities
         public LeasingRecordStatus Status { get; set; }
 
         private LeasingRecord(LeasingRecordId id,
-            TenantId tenantId,
+            LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
             DateTime dateLeased,
             DateTime dateRenewal)
         {
             Id = id;
-            TenantId = tenantId;
+            LesseeId = lesseeId;
             LessorId = lessorId;
             ApartmentId = apartmentId;
             DateLeased = dateLeased;
@@ -34,7 +34,7 @@ namespace Leasing.Domain.Entities
         }
 
         public static LeasingRecord Create(
-            TenantId tenantId,
+            LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
             DateTime dateLeased,
@@ -42,7 +42,7 @@ namespace Leasing.Domain.Entities
         {
             return new LeasingRecord(
                 new LeasingRecordId(Guid.NewGuid()),
-                tenantId,
+                lesseeId,
                 lessorId,
                 apartmentId,
                 dateLeased,

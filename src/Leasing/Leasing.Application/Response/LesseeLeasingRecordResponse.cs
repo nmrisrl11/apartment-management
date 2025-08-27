@@ -1,8 +1,6 @@
-﻿using Leasing.Domain.ValueObjects;
-
-namespace Leasing.Application.Response
+﻿namespace Leasing.Application.Response
 {
-    public class TenantLeasingRecordResponse
+    public class LesseeLeasingRecordResponse
     {
         public Guid Id { get; set; }
         public ApartmentLeasedResponse Apartment { get; private set; } = null!;

@@ -18,7 +18,7 @@ namespace Leasing.Infrastructure.Data
         }
 
         public DbSet<LeasingAgreement> LeasingAgreements { get; set; }
-        public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<Lessee> Lessees { get; set; }
         public DbSet<Lessor> Lessors { get; set; }
         public DbSet<Apartment> Apartments { get; set; }
         public DbSet<LeasingRecord> LeasingRecords { get; set; }
