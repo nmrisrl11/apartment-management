@@ -4,7 +4,7 @@
     {
         public Guid LeasingAgreementId { get; set; }
         public Guid TenantId { get; set; }
-        public Guid OwnerId { get; set; }
+        public Guid LessorId { get; set; }
         public Guid ApartmentId { get; set; }
     }
 }

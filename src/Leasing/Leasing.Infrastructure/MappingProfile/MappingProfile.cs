@@ -12,7 +12,7 @@ namespace Leasing.Infrastructure.MappingProfile
             CreateMap<LeasingAgreement, LeasingAgreementResponse>()
                 .ForMember(la => la.Id, options => options.MapFrom(la => la.Id.Value))
                 .ForMember(la => la.TenantId, options => options.MapFrom(la => la.TenantId.Value))
-                .ForMember(la => la.OwnerId, options => options.MapFrom(la => la.OwnerId.Value))
+                .ForMember(la => la.LessorId, options => options.MapFrom(la => la.LessorId.Value))
                 .ForMember(la => la.ApartmentId, options => options.MapFrom(la => la.ApartmentId.Value));
 
             // Mapping for Tenant
@@ -22,8 +22,8 @@ namespace Leasing.Infrastructure.MappingProfile
             // Mapping for Apartment
             CreateMap<Apartment, ApartmentResponse>()
                 .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value))
-                .ForMember(a => a.OwnerId, options => options.MapFrom(a => a.OwnerId.Value))
-                .ForMember(a => a.Owner, options => options.MapFrom(a => a.Owner));
+                .ForMember(a => a.LessorId, options => options.MapFrom(a => a.LessorId.Value))
+                .ForMember(a => a.Lessor, options => options.MapFrom(a => a.Lessor));
 
             // Mapping for Apartment Leasing History
             CreateMap<LeasingRecord, ApartmentLeasingRecordResponse>()
@@ -37,12 +37,12 @@ namespace Leasing.Infrastructure.MappingProfile
                 .ForMember(lr => lr.Id, options => options.MapFrom(lr => lr.Id.Value));
             CreateMap<Apartment, ApartmentLeasedResponse>()
                 .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value))
-                .ForMember(a => a.OwnerId, options => options.MapFrom(a => a.OwnerId.Value))
-                .ForMember(a => a.Owner, options => options.MapFrom(a => a.Owner));
+                .ForMember(a => a.LessorId, options => options.MapFrom(a => a.LessorId.Value))
+                .ForMember(a => a.Lessor, options => options.MapFrom(a => a.Lessor));
 
-            // Mapping for Owner
-            CreateMap<Owner, OwnerResponse>()
-                .ForMember(o => o.Id, options => options.MapFrom(o => o.Id.Value));
+            // Mapping for Lessor
+            CreateMap<Lessor, LessorResponse>()
+                .ForMember(l => l.Id, options => options.MapFrom(l => l.Id.Value));
         }
     }
 }

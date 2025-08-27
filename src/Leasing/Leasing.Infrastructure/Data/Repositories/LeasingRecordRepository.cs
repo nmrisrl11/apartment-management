@@ -19,12 +19,12 @@ namespace Leasing.Infrastructure.Data.Repositories
             await _context.LeasingRecords.AddAsync(leasingRecord);
         }
 
-        public async Task<LeasingRecord?> GetByIdsAsync(TenantId tenantId, OwnerId ownerId, ApartmentId apartmentId)
+        public async Task<LeasingRecord?> GetByIdsAsync(TenantId tenantId, LessorId lessorId, ApartmentId apartmentId)
         {
             return await _context.LeasingRecords
-                .Where(lr => lr.TenantId == tenantId && lr.OwnerId == ownerId && lr.ApartmentId == apartmentId)
+                .Where(lr => lr.TenantId == tenantId && lr.LessorId == lessorId && lr.ApartmentId == apartmentId)
                 .Include(lr => lr.Tenant)
-                .Include(lr => lr.Owner)
+                .Include(lr => lr.Lessor)
                 .Include(lr => lr.Apartment)
                 .FirstOrDefaultAsync();
         }

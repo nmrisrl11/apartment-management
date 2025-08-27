@@ -17,9 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ApartmentManagement.Contracts\ApartmentManagement.Contracts.csproj" />
     <ProjectReference Include="..\Leasing\Leasing.Application\Leasing.Application.csproj" />
     <ProjectReference Include="..\Leasing\Leasing.Controllers\Leasing.Controllers.csproj" />
     <ProjectReference Include="..\Leasing\Leasing.Infrastructure\Leasing.Infrastructure.csproj" />
+    <ProjectReference Include="..\Ownership\Ownership.Application\Ownership.Application.csproj" />
+    <ProjectReference Include="..\Ownership\Ownership.Controllers\Ownership.Controllers.csproj" />
+    <ProjectReference Include="..\Ownership\Ownership.Infrastructure\Ownership.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

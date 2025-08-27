@@ -1,12 +1,19 @@
+using ApartmentManagement.Contracts.Services;
 using Leasing.Application;
+using Leasing.Controllers;
 using Leasing.Infrastructure;
 using Microsoft.OpenApi.Models;
+using Ownership.Application;
+using Ownership.Controllers;
+using Ownership.Infrastructure;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddApplicationPart(typeof(LeasingAgreementsController).Assembly)
+    .AddApplicationPart(typeof(OwnersController).Assembly);
 
 builder.Services.AddOpenApi(options =>
 {
@@ -46,9 +53,22 @@ builder.Services.AddOpenApi(options =>
     });
 });
 
+builder.Services.AddMediatR(cfg =>
+{
+    cfg.RegisterServicesFromAssembly(typeof(Leasing.Application.AssemblyReference).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(Ownership.Application.AssemblyReference).Assembly);
+});
+
 // Leasing
 builder.Services.AddLeasingApplication();
 builder.Services.AddLeasingInfrastructure(builder.Configuration);
+
+// Ownership
+builder.Services.AddOwnershipApplication();
+builder.Services.AddOwnershipInfrastructure(builder.Configuration);
+
+builder.Services.AddScoped<IEventBus, EventBus>();
+builder.Services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

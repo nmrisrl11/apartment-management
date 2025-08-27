@@ -13,15 +13,15 @@ namespace Leasing.Infrastructure.Data.Configuration
             apartment.Property(a => a.Id)
                 .HasConversion(a => a.Value, value => new ApartmentId(value));
 
-            // Add this configuration for the Owner relationship
-            apartment.HasOne(a => a.Owner)
-                .WithMany() // Assuming a one-to-many or one-to-one relationship from the Owner's side
-                .HasForeignKey(a => a.OwnerId)
+            // Add this configuration for the Lessor relationship
+            apartment.HasOne(a => a.Lessor)
+                .WithMany() // Assuming a one-to-many or one-to-one relationship from the Lessors's side
+                .HasForeignKey(a => a.LessorId)
                 .IsRequired(false); // Or true, depending on your business logic
 
-            // Map the OwnerId Value Object property as a foreign key
-            apartment.Property(a => a.OwnerId)
-                .HasConversion(oid => oid.Value, value => new OwnerId(value));
+            // Map the LessorId Value Object property as a foreign key
+            apartment.Property(a => a.LessorId)
+                .HasConversion(lid => lid.Value, value => new LessorId(value));
         }
     }
 }

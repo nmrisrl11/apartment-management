@@ -24,7 +24,7 @@ namespace Leasing.Infrastructure
             // Repositories
             services.AddScoped<ILeasingAgreementRepository, LeasingAgreementRepository>();
             services.AddScoped<ITenantRepository, TenantRepository>();
-            services.AddScoped<IOwnerRepository, OwnerRepository>();
+            services.AddScoped<ILessorRepository, LessorRepository>();
             services.AddScoped<IApartmentRepository, ApartmentRepository>();
             services.AddScoped<ILeasingRecordRepository, LeasingRecordRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -32,7 +32,7 @@ namespace Leasing.Infrastructure
             // Queries
             services.AddScoped<ILeasingAgreementQueries, LeasingAgreementQueries>();
             services.AddScoped<ITenantQueries, TenantQueries>();
-            services.AddScoped<IOwnerQueries, OwnerQueries>();
+            services.AddScoped<ILessorQueries, LessorQueries>();
             services.AddScoped<IApartmentQueries, ApartmentQueries>();
 
             return services;

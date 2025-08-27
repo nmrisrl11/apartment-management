@@ -4,7 +4,7 @@
     {
         ILeasingAgreementRepository LeasingAgreements { get; }
         ITenantRepository Tenants { get; }
-        IOwnerRepository Owners { get; }
+        ILessorRepository Lessors { get; }
         IApartmentRepository Apartments { get; }
         ILeasingRecordRepository LeasingRecords { get; }
         Task SaveChangesAsync(CancellationToken cancellationToken);
