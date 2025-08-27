@@ -61,12 +61,37 @@ namespace Leasing.Controllers
                 return error switch
                 {
                     NotFoundError => NotFound(error.Message),
+                    ApartmentIsCurrentlyUnderMaintenanceError => Conflict(error.Message),
                     ApartmentAlreadyOccupiedError => Conflict(error.Message),
                     _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
                 };
             }
 
             return Ok();
+        }
+
+        [HttpPost("renew")]
+        public async Task<ActionResult> RenewLeasingAgreement([FromBody] RenewLeasingAgreementRequest request)
+        {
+            Result result = await _commands.RenewAsync(
+                request.LeasingAgreementId,
+                request.TenantId,
+                request.OwnerId,
+                request.ApartmentId,
+                HttpContext.RequestAborted);
+
+            if(result.IsFailed)
+            {
+                var error = result.Errors.First();
+
+                return error switch
+                {
+                    NotFoundError => NotFound(error.Message),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
+                };
+            }
+
+            return Ok(result);
         }
     }
 }

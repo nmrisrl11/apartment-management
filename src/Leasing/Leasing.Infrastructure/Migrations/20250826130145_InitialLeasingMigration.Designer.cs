@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leasing.Infrastructure.Migrations
 {
     [DbContext(typeof(LeasingDbContext))]
-    [Migration("20250826085818_InitialLeasingMigration")]
+    [Migration("20250826130145_InitialLeasingMigration")]
     partial class InitialLeasingMigration
     {
         /// <inheritdoc />

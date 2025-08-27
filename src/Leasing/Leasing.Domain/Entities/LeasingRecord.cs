@@ -57,5 +57,10 @@ namespace Leasing.Domain.Entities
             Status = LeasingRecordStatus.ENDED;
             Apartment.MarkAsVacant();
         }
+
+        public void AdjustDateRenewal()
+        {
+            DateRenewal = DateRenewal.AddDays(30);
+        }
     }
 }
