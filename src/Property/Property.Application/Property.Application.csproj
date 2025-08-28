@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\ApartmentManagement.Contracts\ApartmentManagement.Contracts.csproj" />
     <ProjectReference Include="..\..\Ownership\Ownership.IntegrationEvent\Ownership.IntegrationEvent.csproj" />
-    <ProjectReference Include="..\..\Property\Property.IntegrationEvent\Property.IntegrationEvent.csproj" />
-    <ProjectReference Include="..\..\Tenancy\Tenancy.IntegrationEvent\Tenancy.IntegrationEvent.csproj" />
-    <ProjectReference Include="..\Leasing.Domain\Leasing.Domain.csproj" />
+    <ProjectReference Include="..\Property.Domain\Property.Domain.csproj" />
+    <ProjectReference Include="..\Property.IntegrationEvent\Property.IntegrationEvent.csproj" />
   </ItemGroup>
 
 </Project>

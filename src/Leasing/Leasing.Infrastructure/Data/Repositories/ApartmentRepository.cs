@@ -18,11 +18,6 @@ namespace Leasing.Infrastructure.Data.Repositories
             await _context.Apartments.AddAsync(apartment);
         }
 
-        public void DeleteAsync(Apartment apartment)
-        {
-            _context.Apartments.Remove(apartment);
-        }
-
         public async Task<Apartment?> GetByIdAsync(ApartmentId apartmentId)
         {
             return await _context.Apartments.FindAsync(apartmentId);

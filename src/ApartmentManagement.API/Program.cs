@@ -6,6 +6,9 @@ using Microsoft.OpenApi.Models;
 using Ownership.Application;
 using Ownership.Controllers;
 using Ownership.Infrastructure;
+using Property.Application;
+using Property.Controllers;
+using Property.Infrastructure;
 using Scalar.AspNetCore;
 using Tenancy.Application;
 using Tenancy.Controllers;
@@ -17,7 +20,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers()
     .AddApplicationPart(typeof(LeasingAgreementsController).Assembly)
     .AddApplicationPart(typeof(OwnersController).Assembly)
-    .AddApplicationPart(typeof(TenantsController).Assembly);
+    .AddApplicationPart(typeof(TenantsController).Assembly)
+    .AddApplicationPart(typeof(ApartmentUnitsController).Assembly) ;
 
 builder.Services.AddOpenApi(options =>
 {
@@ -62,6 +66,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Leasing.Application.AssemblyReference).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(Ownership.Application.AssemblyReference).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(Tenancy.Application.AssemblyReference).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(Property.Application.AssemblyReference).Assembly);
 });
 
 // Leasing
@@ -75,6 +80,10 @@ builder.Services.AddOwnershipInfrastructure(builder.Configuration);
 // Tenancy
 builder.Services.AddTenancyApplication();
 builder.Services.AddTenancyInfrastructure(builder.Configuration);
+
+// Property
+builder.Services.AddPropertyApplication();
+builder.Services.AddPropertyInfrastructure(builder.Configuration);
 
 builder.Services.AddScoped<IEventBus, EventBus>();
 builder.Services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();

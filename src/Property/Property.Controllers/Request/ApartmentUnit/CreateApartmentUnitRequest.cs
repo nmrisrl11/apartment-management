@@ -1,8 +1,8 @@
-﻿namespace Leasing.Controllers.Request.Apartment
+﻿namespace Property.Controllers.Request.ApartmentUnit
 {
-    public class CreateApartmentRequest
+    public class CreateApartmentUnitRequest
     {
-        public Guid LessorId { get; set; }
+        public Guid OwnerId { get; set; }
         public required string BuildingNumber { get; set; } = string.Empty;
         public required string ApartmentNumber { get; set; } = string.Empty;
     }

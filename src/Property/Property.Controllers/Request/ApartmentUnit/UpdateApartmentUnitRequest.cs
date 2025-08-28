@@ -1,6 +1,6 @@
-﻿namespace Leasing.Controllers.Request.Apartment
+﻿namespace Property.Controllers.Request.ApartmentUnit
 {
-    public class UpdateApartmentRequest
+    public class UpdateApartmentUnitRequest
     {
         public required string BuildingNumber { get; set; } = string.Empty;
         public required string ApartmentNumber { get; set; } = string.Empty;

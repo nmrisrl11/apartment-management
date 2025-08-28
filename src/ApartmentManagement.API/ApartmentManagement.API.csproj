@@ -24,6 +24,9 @@
     <ProjectReference Include="..\Ownership\Ownership.Application\Ownership.Application.csproj" />
     <ProjectReference Include="..\Ownership\Ownership.Controllers\Ownership.Controllers.csproj" />
     <ProjectReference Include="..\Ownership\Ownership.Infrastructure\Ownership.Infrastructure.csproj" />
+    <ProjectReference Include="..\Property\Property.Application\Property.Application.csproj" />
+    <ProjectReference Include="..\Property\Property.Controllers\Property.Controllers.csproj" />
+    <ProjectReference Include="..\Property\Property.Infrastructure\Property.Infrastructure.csproj" />
     <ProjectReference Include="..\Tenancy\Tenancy.Application\Tenancy.Application.csproj" />
     <ProjectReference Include="..\Tenancy\Tenancy.Controllers\Tenancy.Controllers.csproj" />
     <ProjectReference Include="..\Tenancy\Tenancy.Infrastructure\Tenancy.Infrastructure.csproj" />
