@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using ApartmentManagement.Contracts.Services;
+using AutoMapper;
 using FluentResults;
 using Leasing.Application.Commands;
 using Leasing.Application.Errors;
@@ -14,11 +15,16 @@ namespace Leasing.Application.CommandHandler
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly IDomainEventPublisher _domainEventPublisher;
 
-        public LeasingAgreementCommands(IUnitOfWork unitOfWork, IMapper mapper)
+        public LeasingAgreementCommands(
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            IDomainEventPublisher domainEventPublisher)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
+            _domainEventPublisher = domainEventPublisher;
         }
 
         public async Task<Result> AddAsync(
@@ -53,6 +59,8 @@ namespace Leasing.Application.CommandHandler
                 await _unitOfWork.LeasingAgreements.AddAsync(leasingAgreement);
                 await _unitOfWork.LeasingRecords.AddAsync(leasingRecord);
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                await _domainEventPublisher.PublishAsync(leasingAgreement.DomainEvents, cancellationToken);
 
                 return Result.Ok();
             }

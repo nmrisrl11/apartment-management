@@ -49,14 +49,14 @@ namespace Leasing.Domain.Entities
                 dateRenewal);
         }
 
-        public void Process()
-        {
-            if (Status == LeasingRecordStatus.ENDED)
-                throw new LeasingContractAlreadyEndedException("The leasing contract already ended.");
+        //public void Process()
+        //{
+        //    if (Status == LeasingRecordStatus.ENDED)
+        //        throw new LeasingContractAlreadyEndedException("The leasing contract already ended.");
             
-            Status = LeasingRecordStatus.ENDED;
-            Apartment.MarkAsVacant();
-        }
+        //    Status = LeasingRecordStatus.ENDED;
+        //    Apartment.MarkAsVacant();
+        //}
 
         public void AdjustDateRenewal()
         {

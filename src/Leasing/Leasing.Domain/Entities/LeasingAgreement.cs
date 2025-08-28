@@ -1,9 +1,11 @@
-﻿using Leasing.Domain.Enums;
+﻿using ApartmentManagement.SharedKernel.Entities;
+using Leasing.Domain.DomainEvents;
+using Leasing.Domain.Enums;
 using Leasing.Domain.ValueObjects;
 
 namespace Leasing.Domain.Entities
 {
-    public class LeasingAgreement
+    public class LeasingAgreement : Entity
     {
         public LeasingAgreementId Id { get; private set; } = null!;
         public LesseeId LesseeId { get; private set; } = null!;
@@ -43,13 +45,17 @@ namespace Leasing.Domain.Entities
             DateTime dateLeased,
             DateTime dateRenewal)
         {
-            return new LeasingAgreement(
-                id: new LeasingAgreementId(Guid.NewGuid()),
-                lesseeId: lesseeId,
-                lessorId: lessorId,
-                apartmentId: apartmentId,
-                dateLeased: dateLeased,
-                dateRenewal: dateRenewal);
+            var newLeasingAgreement = new LeasingAgreement(
+                new LeasingAgreementId(Guid.NewGuid()),
+                lesseeId,
+                lessorId,
+                apartmentId,
+                dateLeased,
+                dateRenewal);
+
+            newLeasingAgreement.RaiseDomainEvent(new ApartmentOccupiedEvent(newLeasingAgreement));
+
+            return newLeasingAgreement;
         }
 
         public void Renew()

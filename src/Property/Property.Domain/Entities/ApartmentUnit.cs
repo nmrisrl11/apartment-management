@@ -1,6 +1,7 @@
 ﻿using ApartmentManagement.SharedKernel.Entities;
 using Property.Domain.DomainEvents;
 using Property.Domain.Enums;
+using Property.Domain.Exceptions;
 using Property.Domain.ValueObjects;
 namespace Property.Domain.Entities
 {
@@ -25,7 +26,7 @@ namespace Property.Domain.Entities
             OwnerId = ownerId;
             BuildingNumber = buildingNumber;
             ApartmentNumber = apartmentNumber;
-            Status = ApartmentUnitStatus.VACANT;
+            Status = ApartmentUnitStatus.AVAILABLE_FOR_LEASING;
         }
 
         public static ApartmentUnit Create(OwnerId ownerId, string buildingNumber, string apartmentNumber)
@@ -45,6 +46,33 @@ namespace Property.Domain.Entities
         {
             BuildingNumber = buildingNumber;
             ApartmentNumber = apartmentNumber;
+        }
+
+        public void MarkAsAvailableForLeasing()
+        {
+            if (Status == ApartmentUnitStatus.AVAILABLE_FOR_LEASING)
+                throw new ApartmentUnitAlreadyAvailableForLeasingException("Apartment Unit is already available for leasing.");
+
+            Status = ApartmentUnitStatus.AVAILABLE_FOR_LEASING;
+        }
+
+        public void MarkAsLeased()
+        {
+            if (Status == ApartmentUnitStatus.UNDER_RENOVATION)
+                throw new ApartmentUnitIsCurrentlyUnderRenovationException("Sorry, this aparment unit is currently under renovation.");
+
+            if (Status == ApartmentUnitStatus.LEASED)
+                throw new ApartmentUnitAlreadyLeasedException("Apartment Unit is already leased.");
+
+            Status = ApartmentUnitStatus.LEASED;
+        }
+
+        public void MarkAsUnderRenovation()
+        {
+            if(Status == ApartmentUnitStatus.UNDER_RENOVATION)
+                throw new ApartmentUnitAlreadyUnderRenovationException("Apartment Unit is already under renovation.");
+
+            Status = ApartmentUnitStatus.UNDER_RENOVATION;
         }
     }
 }
