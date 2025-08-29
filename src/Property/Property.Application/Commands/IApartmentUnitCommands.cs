@@ -16,5 +16,11 @@ namespace Property.Application.Commands
             string buildingNumber,
             string apartmentNumber,
             CancellationToken cancellationToken);
+        Task<Result> StartUnderMaintenanceAsync(
+            Guid apartmentId,
+            CancellationToken cancellationToken);
+        Task<Result> FinishUnderMaintenanceAsync(
+            Guid apartmentId,
+            CancellationToken cancellationToken);
     }
 }

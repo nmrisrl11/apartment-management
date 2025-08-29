@@ -1,4 +1,5 @@
 ﻿using FluentResults;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Property.Application.Commands;
 using Property.Application.Errors;
@@ -60,6 +61,47 @@ namespace Property.Controllers
             ApartmentUnitResponse apartmentUnitToCreate = result.Value;
 
             return CreatedAtRoute(nameof(GetApartmentUnitById), new { apartmentUnitToCreate.Id }, apartmentUnitToCreate);
+        }
+
+        [HttpPost("start-under-maintenance/{id}")]
+        public async Task<ActionResult> StartUnderMaintenance(Guid id)
+        {
+            Result result = await _commands.StartUnderMaintenanceAsync(id, HttpContext.RequestAborted);
+
+            if (result.IsFailed)
+            {
+                var error = result.Errors.First();
+
+                return error switch
+                {
+                    NotFoundError => NotFound(error.Message),
+                    ApartmentUnitIsCurrentlyOccupiedError => Conflict(error.Message),
+                    ApartmentUnitAlreadyUnderMaintenanceError => Conflict(error.Message),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
+                };
+            }
+
+            return Ok();
+        }
+
+        [HttpPost("finish-under-maintenance/{id}")]
+        public async Task<ActionResult> FinishUnderMaintenance(Guid id)
+        {
+            Result result = await _commands.FinishUnderMaintenanceAsync(id, HttpContext.RequestAborted);
+
+            if (result.IsFailed)
+            {
+                var error = result.Errors.First();
+
+                return error switch
+                {
+                    NotFoundError => NotFound(error.Message),
+                    ApartmentUnitIsNotUnderMaintenanceError => Conflict(error.Message),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
+                };
+            }
+
+            return Ok();
         }
 
         [HttpDelete("{id}")]

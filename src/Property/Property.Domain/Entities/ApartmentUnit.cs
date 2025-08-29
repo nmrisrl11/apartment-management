@@ -67,12 +67,27 @@ namespace Property.Domain.Entities
             Status = ApartmentUnitStatus.OCCUPIED;
         }
 
-        public void MarkAsUnderMaintenance()
+        public void StartUnderMaintenance()
         {
+            if (Status == ApartmentUnitStatus.OCCUPIED)
+                throw new ApartmentUnitIsCurrentlyOccupiedException("Sorry, this apartment unit is currently occupied.");
+
             if(Status == ApartmentUnitStatus.UNDER_MAINTENANCE)
                 throw new ApartmentUnitAlreadyUnderMaintenanceException("Apartment Unit is already under maintenance.");
 
             Status = ApartmentUnitStatus.UNDER_MAINTENANCE;
+
+            this.RaiseDomainEvent(new ApartmentUnitStartedUnderMaintenanceEvent(this));
+        }
+
+        public void FinishUnderMaintenance()
+        {
+            if (Status != ApartmentUnitStatus.UNDER_MAINTENANCE)
+                throw new ApartmentUnitIsNotUnderMaintenanceException("Sorry, this apartment unit is not under maintenance.");
+
+            Status = ApartmentUnitStatus.VACANT;
+
+            this.RaiseDomainEvent(new ApartmentUnitFinishedUnderMaintenanceEvent(this));
         }
     }
 }

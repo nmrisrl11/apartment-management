@@ -11,7 +11,7 @@ namespace Property.Infrastructure.MappingProfile
             // Mapping for Apartment Unit
             CreateMap<ApartmentUnit, ApartmentUnitResponse>()
                 .ForMember(au => au.Id, options => options.MapFrom(au => au.Id.Value))
-                .ForMember(au => au.OwnerId, options => options.MapFrom(au => au.Id.Value))
+                .ForMember(au => au.OwnerId, options => options.MapFrom(au => au.OwnerId.Value))
                 .ForMember(au => au.Owner, options => options.MapFrom(au => au.Owner));
 
             // Mapping for Owner

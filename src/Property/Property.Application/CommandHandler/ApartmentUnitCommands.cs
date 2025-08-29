@@ -5,6 +5,7 @@ using Property.Application.Commands;
 using Property.Application.Errors;
 using Property.Application.Response;
 using Property.Domain.Entities;
+using Property.Domain.Exceptions;
 using Property.Domain.Repositories;
 using Property.Domain.ValueObjects;
 
@@ -60,6 +61,57 @@ namespace Property.Application.CommandHandler
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Ok();
+        }
+
+        public async Task<Result> FinishUnderMaintenanceAsync(
+            Guid apartmentId,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                ApartmentUnit? apartmentUnit = await _unitOfWork.ApartmentUnits.GetByIdAsync(new ApartmentUnitId(apartmentId));
+
+                if (apartmentUnit is null)
+                    return Result.Fail(new NotFoundError($"Apartment Unit  with id: {apartmentId} is not found."));
+
+                apartmentUnit.FinishUnderMaintenance();
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                await _domainEventPublisher.PublishAsync(apartmentUnit.DomainEvents, cancellationToken);
+                return Result.Ok();
+            } 
+            catch (ApartmentUnitIsNotUnderMaintenanceException ex)
+            {
+                return Result.Fail(new ApartmentUnitIsNotUnderMaintenanceError(ex.Message));
+            }
+        }
+
+        public async Task<Result> StartUnderMaintenanceAsync(
+            Guid apartmentId,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                ApartmentUnit? apartmentUnit = await _unitOfWork.ApartmentUnits.GetByIdAsync(new ApartmentUnitId(apartmentId));
+
+                if (apartmentUnit is null)
+                    return Result.Fail(new NotFoundError($"Apartment Unit  with id: {apartmentId} is not found."));
+
+                apartmentUnit.StartUnderMaintenance();
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                await _domainEventPublisher.PublishAsync(apartmentUnit.DomainEvents, cancellationToken);
+
+                return Result.Ok();
+            }
+            catch(ApartmentUnitIsCurrentlyOccupiedException ex)
+            {
+                return Result.Fail(new ApartmentUnitIsCurrentlyOccupiedError(ex.Message));
+            }
+            catch (ApartmentUnitAlreadyUnderMaintenanceException ex)
+            {
+                return Result.Fail(new ApartmentUnitAlreadyUnderMaintenanceError(ex.Message));
+            }
         }
 
         public async Task<Result> UpdateAsync(
