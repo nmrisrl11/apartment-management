@@ -12,7 +12,7 @@ namespace Leasing.Domain.Services
             var DateLeased = DateTime.UtcNow;
             var DateRenewal = DateLeased.AddDays(30);
 
-            apartment.MarkAsOccupied();
+            apartment.MarkAsLeased();
 
             // Create Leasing Record
             var newLeasingRecord = LeasingRecord.Create(

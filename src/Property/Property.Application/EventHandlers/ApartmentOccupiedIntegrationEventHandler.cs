@@ -24,7 +24,7 @@ namespace Property.Application.EventHandlers
             if (apartmentUnit is null)
                 return;
 
-            apartmentUnit.MarkAsLeased();
+            apartmentUnit.MarkAsOccupied();
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
         }

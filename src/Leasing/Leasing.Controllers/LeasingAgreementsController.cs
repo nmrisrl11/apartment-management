@@ -60,8 +60,8 @@ namespace Leasing.Controllers
                 return error switch
                 {
                     NotFoundError => NotFound(error.Message),
-                    ApartmentIsCurrentlyUnderMaintenanceError => Conflict(error.Message),
-                    ApartmentAlreadyOccupiedError => Conflict(error.Message),
+                    ApartmentIsCurrentlyUnavailableError => Conflict(error.Message),
+                    ApartmentAlreadyLeasedError => Conflict(error.Message),
                     _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
                 };
             }

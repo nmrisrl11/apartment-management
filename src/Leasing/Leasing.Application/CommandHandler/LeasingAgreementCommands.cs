@@ -64,13 +64,13 @@ namespace Leasing.Application.CommandHandler
 
                 return Result.Ok();
             }
-            catch (ApartmentIsCurrentlyUnderMaintenanceException ex)
+            catch (ApartmentIsCurrentlyUnavailableException ex)
             {
-                return Result.Fail(new ApartmentIsCurrentlyUnderMaintenanceError(ex.Message));
+                return Result.Fail(new ApartmentIsCurrentlyUnavailableError(ex.Message));
             }
-            catch (ApartmentAlreadyOccupiedException ex)
+            catch (ApartmentAlreadyLeasedException ex)
             {
-                return Result.Fail(new ApartmentAlreadyOccupiedError(ex.Message));
+                return Result.Fail(new ApartmentAlreadyLeasedError(ex.Message));
             }           
         }
 

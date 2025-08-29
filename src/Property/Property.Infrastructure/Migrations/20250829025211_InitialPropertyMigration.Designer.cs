@@ -12,7 +12,7 @@ using Property.Infrastructure.Data;
 namespace Property.Infrastructure.Migrations
 {
     [DbContext(typeof(PropertyDbContext))]
-    [Migration("20250828102537_InitialPropertyMigration")]
+    [Migration("20250829025211_InitialPropertyMigration")]
     partial class InitialPropertyMigration
     {
         /// <inheritdoc />

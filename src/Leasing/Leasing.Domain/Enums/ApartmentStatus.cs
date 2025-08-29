@@ -2,8 +2,8 @@
 {
     public enum ApartmentStatus
     {
-        VACANT,
-        OCCUPIED,
-        UNDER_MAINTENANCE
+        AVAILABLE,
+        LEASED,
+        UNAVAILABLE
     }
 }

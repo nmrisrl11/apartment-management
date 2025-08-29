@@ -26,7 +26,7 @@ namespace Property.Domain.Entities
             OwnerId = ownerId;
             BuildingNumber = buildingNumber;
             ApartmentNumber = apartmentNumber;
-            Status = ApartmentUnitStatus.AVAILABLE_FOR_LEASING;
+            Status = ApartmentUnitStatus.VACANT;
         }
 
         public static ApartmentUnit Create(OwnerId ownerId, string buildingNumber, string apartmentNumber)
@@ -48,31 +48,31 @@ namespace Property.Domain.Entities
             ApartmentNumber = apartmentNumber;
         }
 
-        public void MarkAsAvailableForLeasing()
+        public void MarkAsVacant()
         {
-            if (Status == ApartmentUnitStatus.AVAILABLE_FOR_LEASING)
-                throw new ApartmentUnitAlreadyAvailableForLeasingException("Apartment Unit is already available for leasing.");
+            if (Status == ApartmentUnitStatus.VACANT)
+                throw new ApartmentUnitAlreadyVacantException("Apartment Unit is already vacant.");
 
-            Status = ApartmentUnitStatus.AVAILABLE_FOR_LEASING;
+            Status = ApartmentUnitStatus.VACANT;
         }
 
-        public void MarkAsLeased()
+        public void MarkAsOccupied()
         {
-            if (Status == ApartmentUnitStatus.UNDER_RENOVATION)
-                throw new ApartmentUnitIsCurrentlyUnderRenovationException("Sorry, this aparment unit is currently under renovation.");
+            if (Status == ApartmentUnitStatus.UNDER_MAINTENANCE)
+                throw new ApartmentUnitIsCurrentlyUnderMaintenanceException("Sorry, this aparment unit is currently under maintenance.");
 
-            if (Status == ApartmentUnitStatus.LEASED)
-                throw new ApartmentUnitAlreadyLeasedException("Apartment Unit is already leased.");
+            if (Status == ApartmentUnitStatus.OCCUPIED)
+                throw new ApartmentUnitAlreadyOccupiedException("Apartment Unit is already occupied.");
 
-            Status = ApartmentUnitStatus.LEASED;
+            Status = ApartmentUnitStatus.OCCUPIED;
         }
 
-        public void MarkAsUnderRenovation()
+        public void MarkAsUnderMaintenance()
         {
-            if(Status == ApartmentUnitStatus.UNDER_RENOVATION)
-                throw new ApartmentUnitAlreadyUnderRenovationException("Apartment Unit is already under renovation.");
+            if(Status == ApartmentUnitStatus.UNDER_MAINTENANCE)
+                throw new ApartmentUnitAlreadyUnderMaintenanceException("Apartment Unit is already under maintenance.");
 
-            Status = ApartmentUnitStatus.UNDER_RENOVATION;
+            Status = ApartmentUnitStatus.UNDER_MAINTENANCE;
         }
     }
 }

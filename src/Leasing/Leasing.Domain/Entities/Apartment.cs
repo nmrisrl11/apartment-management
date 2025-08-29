@@ -24,7 +24,7 @@ namespace Leasing.Domain.Entities
                 LessorId = new LessorId(lessorId),
                 BuildingNumber = buildingNumber,
                 ApartmentNumber = apartmentNumber,
-                Status = ApartmentStatus.VACANT
+                Status = ApartmentStatus.AVAILABLE
             };
         }
 
@@ -34,31 +34,31 @@ namespace Leasing.Domain.Entities
             ApartmentNumber = apartmentNumber;
         }
 
-        public void MarkAsVacant()
+        public void MarkAsAvailable()
         {
-            if(Status == ApartmentStatus.VACANT)
-                throw new ApartmentAlreadyVacantException("Apartment is already vacant.");
+            if(Status == ApartmentStatus.AVAILABLE)
+                throw new ApartmentAlreadyAvailableException("Apartment is already available.");
 
-            Status = ApartmentStatus.VACANT;
+            Status = ApartmentStatus.AVAILABLE;
         }
 
-        public void MarkAsOccupied()
+        public void MarkAsLeased()
         {
-            if(Status == ApartmentStatus.UNDER_MAINTENANCE)
-                throw new ApartmentIsCurrentlyUnderMaintenanceException("Sorry, this aparment is currently under maintenance.");
+            if(Status == ApartmentStatus.UNAVAILABLE)
+                throw new ApartmentIsCurrentlyUnavailableException("Sorry, this aparment is currently unavailable.");
 
-            if(Status == ApartmentStatus.OCCUPIED)
-                throw new ApartmentAlreadyOccupiedException("Apartment is already occupied.");
+            if(Status == ApartmentStatus.LEASED)
+                throw new ApartmentAlreadyLeasedException("Apartment is already leased.");
 
-            Status  = ApartmentStatus.OCCUPIED;
+            Status  = ApartmentStatus.LEASED;
         }
 
-        public void MarkAsUnderMaintenance()
+        public void MarkAsUnavailable()
         {
-            if (Status == ApartmentStatus.UNDER_MAINTENANCE)
-                throw new ApartmentAlreadyUnderMaintenanceException("Apartment is already under maintenance.");
+            if (Status == ApartmentStatus.UNAVAILABLE)
+                throw new ApartmentAlreadyUnavailableException("Apartment is already unavailable.");
 
-            Status = ApartmentStatus.UNDER_MAINTENANCE;
+            Status = ApartmentStatus.UNAVAILABLE;
         }
     }
 }
