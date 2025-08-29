@@ -38,5 +38,15 @@ namespace Leasing.Domain.Services
             leasingAgreement.Renew();
             leasingRecord.AdjustDateRenewal();
         }
+
+        public void TerminateLeasingAgreement(
+            LeasingAgreement leasingAgreement,
+            LeasingRecord leasingRecord,
+            Apartment apartment)
+        {
+            leasingAgreement.Terminate();
+            leasingRecord.MarkAsEnded();
+            apartment.MarkAsAvailable();
+        }
     }
 }

@@ -17,5 +17,12 @@ namespace Leasing.Application.Commands
             Guid lessorId,
             Guid apartmentId,
             CancellationToken cancellationToken);
+
+        Task<Result> TeminateAsync(
+            Guid leasingAgreementId,
+            Guid lesseeId,
+            Guid lessorId,
+            Guid apartmentId,
+            CancellationToken cancellationToken);
     }
 }

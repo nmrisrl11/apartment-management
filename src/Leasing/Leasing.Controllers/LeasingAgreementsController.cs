@@ -92,5 +92,31 @@ namespace Leasing.Controllers
 
             return Ok(result);
         }
+
+        [HttpPost("terminate")]
+        public async Task<ActionResult> TerminateLeasingAgreement([FromBody] TerminateLeasingAgreementRequest request)
+        {
+            Result result = await _commands.TeminateAsync(
+                request.LeasingAgreementId,
+                request.LesseeId,
+                request.LessorId,
+                request.ApartmentId,
+                HttpContext.RequestAborted);
+
+            if (result.IsFailed)
+            {
+                var error = result.Errors.First();
+
+                return error switch
+                {
+                    NotFoundError => NotFound(error.Message),
+                    LeasingContractAlreadyEndedError => Conflict(error.Message),
+                    ApartmentAlreadyAvailableError => Conflict(error.Message),
+                    _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)
+                };
+            }
+
+            return Ok(result);
+        }
     }
 }

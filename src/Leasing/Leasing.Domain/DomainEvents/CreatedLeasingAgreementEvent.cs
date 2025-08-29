@@ -3,5 +3,5 @@ using Leasing.Domain.Entities;
 
 namespace Leasing.Domain.DomainEvents
 {
-    public record ApartmentVacantEvent(LeasingAgreement LeasingAgreement) : IDomainEvent;
+    public record CreatedLeasingAgreementEvent(LeasingAgreement LeasingAgreement) : IDomainEvent;
 }

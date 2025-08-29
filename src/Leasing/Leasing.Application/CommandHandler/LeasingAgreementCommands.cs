@@ -93,8 +93,8 @@ namespace Leasing.Application.CommandHandler
             if (lessor is null)
                 return Result.Fail(new NotFoundError($"Lessor with id: {apartmentId} is not found."));
 
-            Apartment? apartmentToLease = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
-            if (apartmentToLease is null)
+            Apartment? apartmentToRenew = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
+            if (apartmentToRenew is null)
                 return Result.Fail(new NotFoundError($"Apartment with id: {apartmentId} is not found."));
 
             LeasingRecord? leasingRecord = await _unitOfWork.LeasingRecords.GetByIdsAsync(new LesseeId(lesseeId), new LessorId(lessorId), new ApartmentId(apartmentId));
@@ -108,6 +108,62 @@ namespace Leasing.Application.CommandHandler
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Result.Ok();
+        }
+
+        public async Task<Result> TeminateAsync(
+            Guid leasingAgreementId,
+            Guid lesseeId,
+            Guid lessorId,
+            Guid apartmentId,
+            CancellationToken cancellationToken)
+        {
+            try
+            {
+                LeasingAgreement? leasingAgreementToTerminate = await _unitOfWork.LeasingAgreements.GetByIdAsync(new LeasingAgreementId(leasingAgreementId));
+                if (leasingAgreementToTerminate is null)
+                    return Result.Fail(new NotFoundError($"Leasing Agreement with id: {leasingAgreementId} is not found."));
+
+                Lessee? lessee = await _unitOfWork.Lessees.GetByIdAsync(new LesseeId(lesseeId));
+                if (lessee is null)
+                    return Result.Fail(new NotFoundError($"Lessee with id: {apartmentId} is not found."));
+
+                Lessor? lessor = await _unitOfWork.Lessors.GetByIdAsync(new LessorId(lessorId));
+                if (lessor is null)
+                    return Result.Fail(new NotFoundError($"Lessor with id: {apartmentId} is not found."));
+
+                Apartment? apartment = await _unitOfWork.Apartments.GetByIdAsync(new ApartmentId(apartmentId));
+                if (apartment is null)
+                    return Result.Fail(new NotFoundError($"Apartment with id: {apartmentId} is not found."));
+
+                LeasingRecord? leasingRecord = await _unitOfWork.LeasingRecords.GetByIdsAsync(
+                    new LesseeId(lesseeId),
+                    new LessorId(lessorId),
+                    new ApartmentId(apartmentId));
+
+                if (leasingRecord is null)
+                    return Result.Fail(new NotFoundError($"No leasing record found for lessee ID {lesseeId}, lessor ID {lessorId}, and apartment ID {apartmentId}."));
+
+                var leasingAgreementService = new LeasingAgreementService();
+
+                leasingAgreementService.TerminateLeasingAgreement(
+                    leasingAgreementToTerminate,
+                    leasingRecord,
+                    apartment);
+
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+                await _domainEventPublisher.PublishAsync(leasingAgreementToTerminate.DomainEvents, cancellationToken);
+
+                return Result.Ok();
+            } 
+            catch(LeasingContractAlreadyEndedException ex)
+            {
+                return Result.Fail(new LeasingContractAlreadyEndedError(ex.Message));
+            } 
+            catch(ApartmentAlreadyAvailableException ex)
+            {
+                return Result.Fail(new ApartmentAlreadyAvailableError(ex.Message));
+            }
         }
     }
 }

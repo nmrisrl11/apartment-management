@@ -53,7 +53,7 @@ namespace Leasing.Domain.Entities
                 dateLeased,
                 dateRenewal);
 
-            newLeasingAgreement.RaiseDomainEvent(new ApartmentOccupiedEvent(newLeasingAgreement));
+            newLeasingAgreement.RaiseDomainEvent(new CreatedLeasingAgreementEvent(newLeasingAgreement));
 
             return newLeasingAgreement;
         }
@@ -62,6 +62,12 @@ namespace Leasing.Domain.Entities
         {
             Status = AgreementStatus.RENEWED;
             DateRenewal = DateRenewal.AddDays(30);
+        }
+
+        public void Terminate()
+        {
+            Status = AgreementStatus.TERMINATED;
+            this.RaiseDomainEvent(new TerminatedLeasingAgreementEvent(this));
         }
     }
 }
