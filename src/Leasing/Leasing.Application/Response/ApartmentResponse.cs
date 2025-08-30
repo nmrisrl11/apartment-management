@@ -12,4 +12,14 @@ namespace Leasing.Application.Response
         public required ApartmentStatus Status { get; set; }
         public List<ApartmentLeasingRecordResponse> LeasingHistory { get; set; } = [];
     }
+
+    public class ApartmentSummaryResponse
+    {
+        public Guid Id { get; set; }
+        public Guid LessorId { get; set; }
+        public LessorResponse Lessor { get; set; } = null!;
+        public required string BuildingNumber { get; set; }
+        public required string ApartmentNumber { get; set; }
+        public required ApartmentStatus Status { get; set; }
+    }
 }
