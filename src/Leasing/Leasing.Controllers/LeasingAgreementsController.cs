@@ -15,11 +15,19 @@ namespace Leasing.Controllers
     {
         private readonly ILeasingAgreementCommands _commands;
         private readonly ILeasingAgreementQueries _queries;
+        private readonly ILesseeQueries _lesseeQueries;
+        private readonly IApartmentQueries _apartmentQueries;
 
-        public LeasingAgreementsController(ILeasingAgreementCommands commands, ILeasingAgreementQueries queries)
+        public LeasingAgreementsController(
+            ILeasingAgreementCommands commands,
+            ILeasingAgreementQueries queries,
+            ILesseeQueries lesseeQueries,
+            IApartmentQueries apartmentQueries)
         {
             _commands = commands;
             _queries = queries;
+            _lesseeQueries = lesseeQueries;
+            _apartmentQueries = apartmentQueries;
         }
 
         [HttpGet("{id}", Name = "GetLeasingAgreementById")]
@@ -42,6 +50,50 @@ namespace Leasing.Controllers
                 return NotFound();
 
             return Ok(leasingAgreements);
+        }
+
+        [HttpGet("lessee/history/{id}")]
+        public async Task<ActionResult<LesseeResponse>> GetLesseeLeasingHistoryById(Guid id)
+        {
+            LesseeResponse? leseeLeasingHistory = await _lesseeQueries.GetByIdAsync(id);
+                
+            if (leseeLeasingHistory is null)
+                return NotFound();
+
+            return Ok(leseeLeasingHistory);
+        }
+
+        [HttpGet("lessee/history/all")]
+        public async Task<ActionResult<List<LesseeResponse>>> GetLesseeAllLeasingHistory()
+        {
+            List<LesseeResponse> leseeLeasingHistory = await _lesseeQueries.GetAllAsync();
+
+            if (leseeLeasingHistory is null || leseeLeasingHistory.Count == 0)
+                return NotFound();
+
+            return Ok(leseeLeasingHistory);
+        }
+
+        [HttpGet("apartment/history/{id}")]
+        public async Task<ActionResult<ApartmentResponse>> GetApartmentLeasingHistoryById(Guid id)
+        {
+            ApartmentResponse? apartmentLeasingHistory = await _apartmentQueries.GetByIdAsync(id);
+
+            if (apartmentLeasingHistory is null)
+                return NotFound();
+
+            return Ok(apartmentLeasingHistory);
+        }
+
+        [HttpGet("apartment/history/all")]
+        public async Task<ActionResult<List<ApartmentResponse>>> GetApartmentAllLeasingHistory()
+        {
+            List<ApartmentResponse> apartmentLeasingHistory = await _apartmentQueries.GetAllAsync();
+
+            if (apartmentLeasingHistory is null || apartmentLeasingHistory.Count == 0)
+                return NotFound();
+
+            return Ok(apartmentLeasingHistory);
         }
 
         [HttpPost]
