@@ -3,7 +3,7 @@ using Leasing.Domain.ValueObjects;
 using MediatR;
 using Property.IntegrationEvent;
 
-namespace Leasing.Application.EventHandlers
+namespace Leasing.Application.EventHandlers.Integration
 {
     public class ApartmentUnitStartedUnderMaintenanceIntegrationEventHandler : INotificationHandler<ApartmentUnitStartedUnderMaintenanceIntegrationEvent>
     {

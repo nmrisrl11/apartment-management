@@ -2,7 +2,7 @@
 using Ownership.IntegrationEvent;
 using Property.Application.Commands;
 
-namespace Property.Application.EventHandlers
+namespace Property.Application.EventHandlers.Integration
 {
     public class OwnerCreatedIntegrationEventHandler : INotificationHandler<OwnerCreatedIntegrationEvent>
     {

@@ -3,7 +3,7 @@ using MediatR;
 using Property.Domain.DomainEvents;
 using Property.IntegrationEvent;
 
-namespace Property.Application.EventHandlers
+namespace Property.Application.EventHandlers.Domain
 {
     public class ApartmentUnitFinishedUnderMaintenanceEventHandler : INotificationHandler<ApartmentUnitFinishedUnderMaintenanceEvent>
     {

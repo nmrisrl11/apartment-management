@@ -2,7 +2,7 @@
 using MediatR;
 using Tenancy.IntegrationEvent;
 
-namespace Leasing.Application.EventHandlers
+namespace Leasing.Application.EventHandlers.Integration
 {
     public class TenantCreatedIntegrationEventHandler : INotificationHandler<TenantCreatedIntegrationEvent>
     {

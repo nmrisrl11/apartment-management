@@ -12,7 +12,7 @@ using Tenancy.Infrastructure.Data;
 namespace Tenancy.Infrastructure.Migrations
 {
     [DbContext(typeof(TenancyDbContext))]
-    [Migration("20250829025126_InitialTenancyMigration")]
+    [Migration("20250830013338_InitialTenancyMigration")]
     partial class InitialTenancyMigration
     {
         /// <inheritdoc />

@@ -12,7 +12,7 @@ using Ownership.Infrastructure.Data;
 namespace Ownership.Infrastructure.Migrations
 {
     [DbContext(typeof(OwnershipDbContext))]
-    [Migration("20250829025151_InitialOwnershipMigration")]
+    [Migration("20250830013404_InitialOwnershipMigration")]
     partial class InitialOwnershipMigration
     {
         /// <inheritdoc />

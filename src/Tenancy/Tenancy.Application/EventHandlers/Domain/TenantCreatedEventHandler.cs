@@ -4,7 +4,7 @@ using Tenancy.Domain.DomainEvents;
 using Tenancy.IntegrationEvent;
 
 
-namespace Tenancy.Application.EventHandlers
+namespace Tenancy.Application.EventHandlers.Domain
 {
     public class TenantCreatedEventHandler : INotificationHandler<TenantCreatedEvent>
     {

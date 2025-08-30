@@ -3,7 +3,7 @@ using Leasing.Domain.DomainEvents;
 using Leasing.IntegrationEvent;
 using MediatR;
 
-namespace Leasing.Application.EventHandlers
+namespace Leasing.Application.EventHandlers.Domain
 {
     public class TerminatedLeasingAgreementEventHandler : INotificationHandler<TerminatedLeasingAgreementEvent>
     {

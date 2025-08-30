@@ -3,7 +3,7 @@ using MediatR;
 using Ownership.Domain.DomainEvents;
 using Ownership.IntegrationEvent;
 
-namespace Ownership.Application.EventHandlers
+namespace Ownership.Application.EventHandlers.Domain
 {
     public class OwnerCreatedEventHandler : INotificationHandler<OwnerCreatedEvent>
     {
