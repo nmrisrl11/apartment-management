@@ -21,7 +21,11 @@ builder.Services.AddControllers()
     .AddApplicationPart(typeof(LeasingAgreementsController).Assembly)
     .AddApplicationPart(typeof(OwnersController).Assembly)
     .AddApplicationPart(typeof(TenantsController).Assembly)
-    .AddApplicationPart(typeof(ApartmentUnitsController).Assembly) ;
+    .AddApplicationPart(typeof(ApartmentUnitsController).Assembly)
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
+    });
 
 builder.Services.AddOpenApi(options =>
 {

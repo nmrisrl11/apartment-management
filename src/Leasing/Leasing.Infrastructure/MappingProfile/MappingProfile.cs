@@ -10,10 +10,7 @@ namespace Leasing.Infrastructure.MappingProfile
         {
             // Mapping for Leasing Agreement
             CreateMap<LeasingAgreement, LeasingAgreementResponse>()
-                .ForMember(la => la.Id, options => options.MapFrom(la => la.Id.Value))
-                .ForMember(la => la.LesseeId, options => options.MapFrom(la => la.LesseeId.Value))
-                .ForMember(la => la.LessorId, options => options.MapFrom(la => la.LessorId.Value))
-                .ForMember(la => la.ApartmentId, options => options.MapFrom(la => la.ApartmentId.Value));
+                .ForMember(la => la.Id, options => options.MapFrom(la => la.Id.Value));
 
             // Mapping for Lessee
             CreateMap<Lessee, LesseeResponse>()
@@ -29,9 +26,7 @@ namespace Leasing.Infrastructure.MappingProfile
                 .ForMember(a => a.Lessor, options => options.MapFrom(a => a.Lessor));
 
             CreateMap<Apartment, ApartmentSummaryResponse>()
-                .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value))
-                .ForMember(a => a.LessorId, options => options.MapFrom(a => a.LessorId.Value))
-                .ForMember(a => a.Lessor, options => options.MapFrom(a => a.Lessor));
+                .ForMember(a => a.Id, options => options.MapFrom(a => a.Id.Value));
 
             // Mapping for Apartment Leasing History
             CreateMap<LeasingRecord, ApartmentLeasingRecordResponse>()
