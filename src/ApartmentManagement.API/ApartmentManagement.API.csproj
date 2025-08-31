@@ -18,6 +18,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ApartmentManagement.Contracts\ApartmentManagement.Contracts.csproj" />
+    <ProjectReference Include="..\Billing\Billing.Application\Billing.Application.csproj" />
+    <ProjectReference Include="..\Billing\Billing.Controllers\Billing.Controllers.csproj" />
+    <ProjectReference Include="..\Billing\Billing.Infrastructure\Billing.Infrastructure.csproj" />
     <ProjectReference Include="..\Leasing\Leasing.Application\Leasing.Application.csproj" />
     <ProjectReference Include="..\Leasing\Leasing.Controllers\Leasing.Controllers.csproj" />
     <ProjectReference Include="..\Leasing\Leasing.Infrastructure\Leasing.Infrastructure.csproj" />
