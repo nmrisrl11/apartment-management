@@ -1,4 +1,6 @@
 using ApartmentManagement.Contracts.Services;
+using Billing.Application;
+using Billing.Infrastructure;
 using Leasing.Application;
 using Leasing.Controllers;
 using Leasing.Infrastructure;
@@ -71,6 +73,7 @@ builder.Services.AddMediatR(cfg =>
     cfg.RegisterServicesFromAssembly(typeof(Ownership.Application.AssemblyReference).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(Tenancy.Application.AssemblyReference).Assembly);
     cfg.RegisterServicesFromAssembly(typeof(Property.Application.AssemblyReference).Assembly);
+    cfg.RegisterServicesFromAssembly(typeof(Billing.Application.AssemblyReference).Assembly);
 });
 
 // Leasing
@@ -88,6 +91,10 @@ builder.Services.AddTenancyInfrastructure(builder.Configuration);
 // Property
 builder.Services.AddPropertyApplication();
 builder.Services.AddPropertyInfrastructure(builder.Configuration);
+
+// Billing
+builder.Services.AddBillingApplication();
+builder.Services.AddBillingInfrastructure(builder.Configuration);
 
 builder.Services.AddScoped<IEventBus, EventBus>();
 builder.Services.AddScoped<IDomainEventPublisher, DomainEventPublisher>();

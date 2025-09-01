@@ -18,4 +18,8 @@
     <ProjectReference Include="..\Billing.IntegrationEvent\Billing.IntegrationEvent.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EventHandlers\" />
+  </ItemGroup>
+
 </Project>
