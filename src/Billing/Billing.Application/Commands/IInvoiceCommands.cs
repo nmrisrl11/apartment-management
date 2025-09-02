@@ -9,15 +9,19 @@ namespace Billing.Application.Commands
         Task<Result<InvoiceResponse>> AddAsync(
             Guid tenantId,
             Guid leasingAgreementId,
+            DateTime ServicePeriodStartDate,
+            DateTime ServicePeriodEndDate,
+            DateTime DateDue,
             CancellationToken cancellationToken);
         Task<Result> DeleteAsync(
-            Guid invoiceId,
+            Guid id,
             CancellationToken cancellationToken);
         Task<Result> AddInvoiceLineItemAsync(
             Guid invoiceId,
             string description,
             decimal quantity,
-            Money unitPrice,
+            decimal unitPrice,
+            string currency,
             CancellationToken cancellationToken);
         Task<Result> IssueInvoiceAsync(
             Guid invoiceId,

@@ -6,6 +6,7 @@ namespace Billing.Domain.Entities
     {
         public InvoiceLineItemId Id { get; private set; } = null!;
         public InvoiceId InvoiceId { get; private set; } = null!;
+        public Invoice Invoice { get; private set; } = null!;
         public string Description { get; private set; } = string.Empty;
         public decimal Quantity { get; private set; }
         public Money UnitPrice { get; private set; } = null!;

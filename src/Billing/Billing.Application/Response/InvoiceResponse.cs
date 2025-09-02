@@ -13,7 +13,16 @@ namespace Billing.Application.Response
         public DateTime DateCreated { get; set; }
         public DateTime? DateIssued { get; private set; }
         public DateTime DateDue { get; private set; }
-        public DateRange ServicePeriod { get; private set; } = null!;
-        public Money AmountPaid { get; private set; } = new(0, "PHP");
+
+        public DateTime ServicePeriodStartDate { get; private set; }
+        public DateTime ServicePeriodEndDate { get; private set; }
+
+        public List<InvoiceLineItemResponse> LineItems { get; set; } = null!;
+
+        public decimal Subtotal { get; set; }
+        public decimal TotalAmount { get; set; }
+        public decimal AmountPaid { get; set; }
+        public decimal AmountDue { get; set; }
+        public string Currency { get; set; } = string.Empty;
     }
 }

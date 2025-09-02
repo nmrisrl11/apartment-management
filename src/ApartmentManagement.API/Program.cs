@@ -1,5 +1,6 @@
 using ApartmentManagement.Contracts.Services;
 using Billing.Application;
+using Billing.Controllers;
 using Billing.Infrastructure;
 using Leasing.Application;
 using Leasing.Controllers;
@@ -24,6 +25,7 @@ builder.Services.AddControllers()
     .AddApplicationPart(typeof(OwnersController).Assembly)
     .AddApplicationPart(typeof(TenantsController).Assembly)
     .AddApplicationPart(typeof(ApartmentUnitsController).Assembly)
+    .AddApplicationPart(typeof(InvoicesController).Assembly)
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());

@@ -29,9 +29,9 @@ namespace Billing.Domain.Entities
         
         public static Invoice Create(
             TenantId tenantId,
-            LeasingAgreementId leasingAgreementId
-            //DateRange period,
-            //DateTime dateDue
+            LeasingAgreementId leasingAgreementId,
+            DateRange period,
+            DateTime dateDue
             )
         {            
             var invoice = new Invoice
@@ -43,8 +43,8 @@ namespace Billing.Domain.Entities
                 Status = InvoiceStatus.DRAFT,
                 DateCreated = DateTime.UtcNow,
                 DateIssued = null,
-                //DateDue = dateDue,
-                //ServicePeriod = period
+                DateDue = dateDue,
+                ServicePeriod = period
             };
 
             return invoice;
