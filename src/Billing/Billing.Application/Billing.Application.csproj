@@ -14,12 +14,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\ApartmentManagement.Contracts\ApartmentManagement.Contracts.csproj" />
+    <ProjectReference Include="..\..\Leasing\Leasing.IntegrationEvent\Leasing.IntegrationEvent.csproj" />
+    <ProjectReference Include="..\..\Tenancy\Tenancy.IntegrationEvent\Tenancy.IntegrationEvent.csproj" />
     <ProjectReference Include="..\Billing.Domain\Billing.Domain.csproj" />
     <ProjectReference Include="..\Billing.IntegrationEvent\Billing.IntegrationEvent.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="EventHandlers\" />
+    <Folder Include="EventHandlers\Domain\" />
   </ItemGroup>
 
 </Project>

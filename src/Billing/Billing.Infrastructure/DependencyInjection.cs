@@ -23,10 +23,12 @@ namespace Billing.Infrastructure
 
             // Repositories
             services.AddScoped<IInvoiceRepository, InvoiceRepository>();
+            services.AddScoped<ITenantRepository, TenantRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             // Queries
             services.AddScoped<IInvoiceQueries, InvoiceQueries>();
+            services.AddScoped<ITenantQueries, TenantQueries>();
 
             return services;
         }

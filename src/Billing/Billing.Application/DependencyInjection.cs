@@ -9,6 +9,7 @@ namespace Billing.Application
         public static IServiceCollection AddBillingApplication(this IServiceCollection services)
         {
             services.AddScoped<IInvoiceCommands, InvoiceCommands>();
+            services.AddScoped<ITenantCommands, TenantCommands>();
 
             return services;
         }

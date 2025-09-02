@@ -35,6 +35,10 @@ namespace Billing.Infrastructure.MappingProfile
 
                 // Assume all money is in the same currency for the invoice total for simplicity
                 .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.TotalAmount.Currency));
+
+            // Mapping for Tenant
+            CreateMap<Tenant, TenantResponse>()
+                .ForMember(l => l.Id, options => options.MapFrom(l => l.Id.Value));
         }
     }
 }
