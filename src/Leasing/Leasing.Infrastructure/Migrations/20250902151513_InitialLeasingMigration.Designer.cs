@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Leasing.Infrastructure.Migrations
 {
     [DbContext(typeof(LeasingDbContext))]
-    [Migration("20250902091259_ChangedDateNames")]
-    partial class ChangedDateNames
+    [Migration("20250902151513_InitialLeasingMigration")]
+    partial class InitialLeasingMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

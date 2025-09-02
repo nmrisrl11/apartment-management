@@ -19,6 +19,11 @@ namespace Billing.Infrastructure.Data.Repositories
             await _context.Payments.AddAsync(payment);
         }
 
+        public void DeleteAsync(Payment payment)
+        {
+            _context.Payments.Remove(payment);
+        }
+
         public async Task<Payment?> GetByIdAsync(PaymentId id)
         {
             return await _context.Payments.Where(t => t.Id == id).FirstOrDefaultAsync();

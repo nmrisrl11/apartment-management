@@ -16,6 +16,7 @@ namespace Leasing.Application.EventHandlers.Domain
         public async Task Handle(CreatedLeasingAgreementEvent notification, CancellationToken cancellationToken)
         {
             var integrationEvent = new CreatedLeasingAgreementIntegrationEvent(
+                notification.LeasingAgreement.Id.Value,
                 notification.LeasingAgreement.ApartmentId.Value);
 
             await _eventBus.PublishAsync(integrationEvent, cancellationToken);

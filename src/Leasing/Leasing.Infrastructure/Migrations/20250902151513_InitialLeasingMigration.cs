@@ -74,8 +74,8 @@ namespace Leasing.Infrastructure.Migrations
                     LessorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
-                    DateLeased = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateRenewal = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateCommenced = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateExpiry = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -112,8 +112,8 @@ namespace Leasing.Infrastructure.Migrations
                     LesseeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     LessorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ApartmentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    DateLeased = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateRenewal = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCommenced = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateExpiry = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

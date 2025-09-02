@@ -19,7 +19,7 @@ namespace Property.Application.EventHandlers.Integration
         }
         public async Task Handle(CreatedLeasingAgreementIntegrationEvent notification, CancellationToken cancellationToken)
         {
-            var apartmentUnit = await _apartmentUnitRepository.GetByIdAsync(new ApartmentUnitId(notification.Id));
+            var apartmentUnit = await _apartmentUnitRepository.GetByIdAsync(new ApartmentUnitId(notification.ApartmentId));
 
             if (apartmentUnit is null)
                 return;

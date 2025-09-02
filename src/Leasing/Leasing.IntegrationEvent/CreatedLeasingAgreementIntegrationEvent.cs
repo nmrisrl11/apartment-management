@@ -2,5 +2,7 @@
 
 namespace Leasing.IntegrationEvent
 {
-    public record CreatedLeasingAgreementIntegrationEvent(Guid Id) : IIntegrationEvent;
+    public record CreatedLeasingAgreementIntegrationEvent(
+        Guid LeasingAgreementId,
+        Guid ApartmentId) : IIntegrationEvent;
 }

@@ -21,7 +21,7 @@ namespace Billing.Application.EventHandlers.Integration
         public async Task Handle(CreatedLeasingAgreementIntegrationEvent notification, CancellationToken cancellationToken)
         {
             
-            await _leasingAgreementCommands.AddAsync(notification.Id, cancellationToken);
+            await _leasingAgreementCommands.AddAsync(notification.LeasingAgreementId, cancellationToken);
         }
     }
 }

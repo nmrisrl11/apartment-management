@@ -50,6 +50,26 @@ namespace Billing.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                schema: "Billing",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    InvoiceId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Currency = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    ProcessedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Method = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    TransactionReference = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Tenants",
                 schema: "Billing",
                 columns: table => new
@@ -102,6 +122,10 @@ namespace Billing.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "LeasingAgreements",
+                schema: "Billing");
+
+            migrationBuilder.DropTable(
+                name: "Payments",
                 schema: "Billing");
 
             migrationBuilder.DropTable(
