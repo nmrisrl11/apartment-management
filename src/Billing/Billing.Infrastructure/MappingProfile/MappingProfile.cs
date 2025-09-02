@@ -43,6 +43,13 @@ namespace Billing.Infrastructure.MappingProfile
             // Mapping for Leasing Agrement
             CreateMap<LeasingAgreement, LeasingAgreementResponse>()
                 .ForMember(l => l.Id, options => options.MapFrom(l => l.Id.Value));
+
+            // Mapping for Payment
+            CreateMap<Payment, PaymentResponse>()
+                .ForMember(p => p.Id, options => options.MapFrom(p => p.Id.Value))
+                .ForMember(p => p.InvoiceId, options => options.MapFrom(p => p.InvoiceId.Value))
+                .ForMember(dest => dest.Amount, options => options.MapFrom(src => src.Amount.Amount))
+                .ForMember(dest => dest.Currency, options => options.MapFrom(src => src.Amount.Currency));
         }
     }
 }
