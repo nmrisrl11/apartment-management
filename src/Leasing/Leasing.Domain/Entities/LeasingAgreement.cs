@@ -15,8 +15,8 @@ namespace Leasing.Domain.Entities
         public ApartmentId ApartmentId { get; private set; } = null!;
         public Apartment Apartment { get; private set; } = null!;
         public  AgreementStatus Status { get; private set; }
-        public DateTime DateLeased { get; private set; }
-        public DateTime DateRenewal { get; private set; }
+        public DateTime DateCommenced { get; private set; }
+        public DateTime DateExpiry { get; private set; }
 
         protected LeasingAgreement() { }
 
@@ -26,32 +26,32 @@ namespace Leasing.Domain.Entities
             LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
-            DateTime dateLeased,
-            DateTime dateRenewal)
+            DateTime dateCommenced,
+            DateTime dateExpiry)
         {
             Id = id;
             LesseeId = lesseeId;
             LessorId = lessorId;
             ApartmentId = apartmentId;
             Status = AgreementStatus.NEW;
-            DateLeased = dateLeased;
-            DateRenewal = dateRenewal;
+            DateCommenced = dateCommenced;
+            DateExpiry = dateExpiry;
         }
 
         public static LeasingAgreement Create(
             LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
-            DateTime dateLeased,
-            DateTime dateRenewal)
+            DateTime dateCommenced,
+            DateTime dateExpiry)
         {
             var newLeasingAgreement = new LeasingAgreement(
                 new LeasingAgreementId(Guid.NewGuid()),
                 lesseeId,
                 lessorId,
                 apartmentId,
-                dateLeased,
-                dateRenewal);
+                dateCommenced,
+                dateExpiry);
 
             newLeasingAgreement.RaiseDomainEvent(new CreatedLeasingAgreementEvent(newLeasingAgreement));
 
@@ -61,7 +61,7 @@ namespace Leasing.Domain.Entities
         public void Renew()
         {
             Status = AgreementStatus.RENEWED;
-            DateRenewal = DateRenewal.AddDays(30);
+            DateExpiry = DateExpiry.AddYears(1);
         }
 
         public void Terminate()

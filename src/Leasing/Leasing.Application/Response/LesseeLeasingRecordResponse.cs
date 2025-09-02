@@ -4,8 +4,8 @@
     {
         public Guid Id { get; set; }
         public ApartmentLeasedResponse Apartment { get; private set; } = null!;
-        public DateTime DateLeased { get; private set; }
-        public DateTime DateRenewal { get; private set; }
+        public DateTime DateCommenced { get; private set; }
+        public DateTime DateExpiry { get; private set; }
 
     }
 

@@ -9,8 +9,8 @@ namespace Leasing.Domain.Services
             Lessor lessor,
             Apartment apartment)
         {
-            var DateLeased = DateTime.UtcNow;
-            var DateRenewal = DateLeased.AddDays(30);
+            var DateCommenced = DateTime.UtcNow;
+            var DateExpiry = DateCommenced.AddYears(1);
 
             apartment.MarkAsLeased();
 
@@ -19,16 +19,16 @@ namespace Leasing.Domain.Services
                 lessee.Id,
                 lessor.Id,
                 apartment.Id,
-                DateLeased,
-                DateRenewal);
+                DateCommenced,
+                DateExpiry);
 
             // Create Leasing Agreement
             var newLeasingAgreement = LeasingAgreement.Create(
                 lessee.Id,
                 lessor.Id,
                 apartment.Id,
-                DateLeased,
-                DateRenewal);
+                DateCommenced,
+                DateExpiry);
 
             return (newLeasingAgreement, newLeasingRecord);
         }

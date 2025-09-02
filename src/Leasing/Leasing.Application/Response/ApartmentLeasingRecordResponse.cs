@@ -4,8 +4,8 @@
     {
         public Guid Id { get; set; }
         public ApartmentLesseeResponse Lessee { get; set; } = null!;
-        public DateTime DateLeased { get; set; }
-        public DateTime DateRenewal { get; set; }
+        public DateTime DateCommenced { get; set; }
+        public DateTime DateExpiry { get; set; }
     }
 
     public class ApartmentLesseeResponse

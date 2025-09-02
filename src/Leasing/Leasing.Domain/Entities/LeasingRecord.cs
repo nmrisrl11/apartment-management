@@ -13,23 +13,23 @@ namespace Leasing.Domain.Entities
         public Lessor Lessor { get; private set; } = null!;
         public ApartmentId ApartmentId { get; private set; } = null!;
         public Apartment Apartment { get; private set; } = null!;
-        public DateTime DateLeased { get; private set; }
-        public DateTime DateRenewal { get; private set; }
+        public DateTime DateCommenced { get; private set; }
+        public DateTime DateExpiry { get; private set; }
         public LeasingRecordStatus Status { get; set; }
 
         private LeasingRecord(LeasingRecordId id,
             LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
-            DateTime dateLeased,
-            DateTime dateRenewal)
+            DateTime dateCommenced,
+            DateTime dateExpiry)
         {
             Id = id;
             LesseeId = lesseeId;
             LessorId = lessorId;
             ApartmentId = apartmentId;
-            DateLeased = dateLeased;
-            DateRenewal = dateRenewal;
+            DateCommenced = dateCommenced;
+            DateExpiry = dateExpiry;
             Status = LeasingRecordStatus.ACTIVE;
         }
 
@@ -37,21 +37,21 @@ namespace Leasing.Domain.Entities
             LesseeId lesseeId,
             LessorId lessorId,
             ApartmentId apartmentId,
-            DateTime dateLeased,
-            DateTime dateRenewal)
+            DateTime dateCommenced,
+            DateTime dateExpiry)
         {
             return new LeasingRecord(
                 new LeasingRecordId(Guid.NewGuid()),
                 lesseeId,
                 lessorId,
                 apartmentId,
-                dateLeased,
-                dateRenewal);
+                dateCommenced,
+                dateExpiry);
         }
 
         public void AdjustDateRenewal()
         {
-            DateRenewal = DateRenewal.AddDays(30);
+            DateExpiry = DateExpiry.AddYears(1);
         }
 
         public void MarkAsEnded()

@@ -9,7 +9,7 @@ namespace Leasing.Application.Response
         public LessorResponse Lessor { get; set; } = null!;
         public ApartmentSummaryResponse Apartment { get; set; } = null!;
         public AgreementStatus Status { get; set; }
-        public DateTime DateLeased { get; set; }
-        public DateTime DateRenewal { get; set; }
+        public DateTime DateCommenced { get; set; }
+        public DateTime DateExpiry { get; set; }
     }
 }
