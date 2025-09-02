@@ -34,11 +34,19 @@ namespace Billing.Application.CommandHandler
             DateTime DateDue,
             CancellationToken cancellationToken)
         {
-            // Todo: Add the checking of TenantId and LeasingAgreementId here
-
             var TenantId = new TenantId(tenantId);
             var LeasingAgreementId = new LeasingAgreementId(leasingAgreementId);
             var ServicePeriod = new DateRange(ServicePeriodStartDate, ServicePeriodEndDate);
+
+            Tenant? tenant = await _unitOfWork.Tenants.GetByIdAsync(TenantId);
+
+            if (tenant is null)
+                return Result.Fail(new NotFoundError($"Tenant with id: {tenantId} is not found."));
+
+            LeasingAgreement? leasingAgreement = await _unitOfWork.LeasingAgreements.GetByIdAsync(LeasingAgreementId);
+
+            if (leasingAgreement is null)
+                return Result.Fail(new NotFoundError($"Leasing Agreement with id: {leasingAgreementId} is not found."));
 
             Invoice invoiceToCreate = Invoice.Create(TenantId, LeasingAgreementId, ServicePeriod, DateDue);
 
