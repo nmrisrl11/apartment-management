@@ -10,6 +10,7 @@ namespace Billing.Application
         {
             services.AddScoped<IInvoiceCommands, InvoiceCommands>();
             services.AddScoped<ITenantCommands, TenantCommands>();
+            services.AddScoped<ILeasingAgreementCommands, LeasingAgreementCommands>();
 
             return services;
         }

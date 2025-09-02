@@ -20,5 +20,6 @@ namespace Billing.Infrastructure.Data
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<InvoiceLineItem> InvoiceLineItems {  get; set; }
         public DbSet<Tenant> Tenants { get; set; }
+        public DbSet<LeasingAgreement> LeasingAgreements { get; set; }
     }
 }

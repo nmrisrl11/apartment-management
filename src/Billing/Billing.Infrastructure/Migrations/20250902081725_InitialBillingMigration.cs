@@ -38,6 +38,31 @@ namespace Billing.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "LeasingAgreements",
+                schema: "Billing",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LeasingAgreements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tenants",
+                schema: "Billing",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tenants", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "InvoiceLineItems",
                 schema: "Billing",
                 columns: table => new
@@ -73,6 +98,14 @@ namespace Billing.Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "InvoiceLineItems",
+                schema: "Billing");
+
+            migrationBuilder.DropTable(
+                name: "LeasingAgreements",
+                schema: "Billing");
+
+            migrationBuilder.DropTable(
+                name: "Tenants",
                 schema: "Billing");
 
             migrationBuilder.DropTable(

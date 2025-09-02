@@ -4,6 +4,7 @@
     {
         IInvoiceRepository Invoices { get; }
         ITenantRepository Tenants { get; }
+        ILeasingAgreementRepository LeasingAgreements { get; }
         Task SaveChangesAsync(CancellationToken cancellationToken);
     }
 }

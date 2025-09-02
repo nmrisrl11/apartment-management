@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Billing.Infrastructure.Migrations
 {
     [DbContext(typeof(BillingDbContext))]
-    [Migration("20250902072809_AddedTenantTable")]
-    partial class AddedTenantTable
+    [Migration("20250902081725_InitialBillingMigration")]
+    partial class InitialBillingMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -78,6 +78,16 @@ namespace Billing.Infrastructure.Migrations
                     b.HasIndex("InvoiceId");
 
                     b.ToTable("InvoiceLineItems", "Billing");
+                });
+
+            modelBuilder.Entity("Billing.Domain.Entities.LeasingAgreement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeasingAgreements", "Billing");
                 });
 
             modelBuilder.Entity("Billing.Domain.Entities.Tenant", b =>

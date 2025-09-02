@@ -77,6 +77,16 @@ namespace Billing.Infrastructure.Migrations
                     b.ToTable("InvoiceLineItems", "Billing");
                 });
 
+            modelBuilder.Entity("Billing.Domain.Entities.LeasingAgreement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("LeasingAgreements", "Billing");
+                });
+
             modelBuilder.Entity("Billing.Domain.Entities.Tenant", b =>
                 {
                     b.Property<Guid>("Id")

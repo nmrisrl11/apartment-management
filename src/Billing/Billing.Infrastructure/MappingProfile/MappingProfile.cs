@@ -39,6 +39,10 @@ namespace Billing.Infrastructure.MappingProfile
             // Mapping for Tenant
             CreateMap<Tenant, TenantResponse>()
                 .ForMember(l => l.Id, options => options.MapFrom(l => l.Id.Value));
+
+            // Mapping for Leasing Agrement
+            CreateMap<LeasingAgreement, LeasingAgreementResponse>()
+                .ForMember(l => l.Id, options => options.MapFrom(l => l.Id.Value));
         }
     }
 }

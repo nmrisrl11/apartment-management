@@ -5,39 +5,31 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Tenancy.Infrastructure.Data;
+using Ownership.Infrastructure.Data;
 
 #nullable disable
 
-namespace Tenancy.Infrastructure.Migrations
+namespace Ownership.Infrastructure.Migrations
 {
-    [DbContext(typeof(TenancyDbContext))]
-    [Migration("20250830013338_InitialTenancyMigration")]
-    partial class InitialTenancyMigration
+    [DbContext(typeof(OwnershipDbContext))]
+    [Migration("20250902081626_InitialOwnershipMigration")]
+    partial class InitialOwnershipMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Tenancy")
+                .HasDefaultSchema("Ownership")
                 .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Tenancy.Domain.Entities.Tenant", b =>
+            modelBuilder.Entity("Ownership.Domain.Entities.Owner", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("ContactNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -45,7 +37,7 @@ namespace Tenancy.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tenants", "Tenancy");
+                    b.ToTable("Owners", "Ownership");
                 });
 #pragma warning restore 612, 618
         }

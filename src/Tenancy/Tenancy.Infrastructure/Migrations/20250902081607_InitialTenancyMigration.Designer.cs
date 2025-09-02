@@ -5,31 +5,39 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Ownership.Infrastructure.Data;
+using Tenancy.Infrastructure.Data;
 
 #nullable disable
 
-namespace Ownership.Infrastructure.Migrations
+namespace Tenancy.Infrastructure.Migrations
 {
-    [DbContext(typeof(OwnershipDbContext))]
-    [Migration("20250830013404_InitialOwnershipMigration")]
-    partial class InitialOwnershipMigration
+    [DbContext(typeof(TenancyDbContext))]
+    [Migration("20250902081607_InitialTenancyMigration")]
+    partial class InitialTenancyMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Ownership")
+                .HasDefaultSchema("Tenancy")
                 .HasAnnotation("ProductVersion", "9.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Ownership.Domain.Entities.Owner", b =>
+            modelBuilder.Entity("Tenancy.Domain.Entities.Tenant", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("ContactNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -37,7 +45,7 @@ namespace Ownership.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Owners", "Ownership");
+                    b.ToTable("Tenants", "Tenancy");
                 });
 #pragma warning restore 612, 618
         }
