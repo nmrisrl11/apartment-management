@@ -26,6 +26,12 @@ namespace Billing.Domain.Entities
             if (invoice is null)
                 throw new InvoiceIsEmptyException("Invoice is empty.");
 
+            if (invoice.Status == InvoiceStatus.PAID)
+                throw new InvoiceAlreadyPaidException("Cannot pay an invoice that has already been paid.");
+
+            if (invoice.Status != InvoiceStatus.ISSUED)
+                throw new InvoiceIsNotYetIssuedException("Cannot pay an invoice that has not been issued yet.");
+            
             if (amount.Amount <= 0)
                 throw new InvalidPaymentException("Payment amount must be a positive value.");
 

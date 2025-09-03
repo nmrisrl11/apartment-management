@@ -36,7 +36,7 @@ namespace Billing.Application.CommandHandler
                 var AmountToPay = new Money(amount, currency);
                 var PaymentMethod = Enum.Parse<PaymentMethod>(method, true);
 
-                Invoice? invoice = await _unitOfWork.Invoices.GetByIdAsync(InvoiceID);
+                Invoice? invoice = await _unitOfWork.Invoices.GetByIdWithLineItemsAsync(InvoiceID);
 
                 if (invoice is null)
                     return Result.Fail(new NotFoundError($"Invoice with id: {invoiceId} is not found."));
@@ -55,7 +55,15 @@ namespace Billing.Application.CommandHandler
             {
                 return Result.Fail(new InvoiceIsEmptyError(ex.Message));
             }
-            catch(InvalidPaymentException ex)
+            catch (InvoiceIsNotYetIssuedException ex)
+            {
+                return Result.Fail(new InvoiceIsNotYetIssuedError(ex.Message));
+            }
+            catch (InvoiceAlreadyPaidException ex)
+            {
+                return Result.Fail(new InvoiceAlreadyPaidError(ex.Message));
+            }
+            catch (InvalidPaymentException ex)
             {
                 return Result.Fail(new InvalidPaymentError(ex.Message));
             }

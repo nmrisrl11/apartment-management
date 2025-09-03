@@ -65,6 +65,8 @@ namespace Billing.Controllers
                 {
                     NotFoundError => NotFound(error.Message),
                     InvoiceIsEmptyError => Conflict(error.Message),
+                    InvoiceIsNotYetIssuedError => Conflict(error.Message),
+                    InvoiceAlreadyPaidError => Conflict(error.Message),
                     InvalidPaymentError => Conflict(error.Message),
                     CannotMarkAsSucceededError => Conflict(error.Message),
                     _ => StatusCode(StatusCodes.Status500InternalServerError, error.Message)

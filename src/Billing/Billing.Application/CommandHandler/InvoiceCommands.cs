@@ -104,7 +104,7 @@ namespace Billing.Application.CommandHandler
         {           
             try
             {
-                Invoice? invoiceToIssue = await _unitOfWork.Invoices.GetByIdAsync(new InvoiceId(invoiceId));
+                Invoice? invoiceToIssue = await _unitOfWork.Invoices.GetByIdWithLineItemsAsync(new InvoiceId(invoiceId));
 
                 if (invoiceToIssue is null)
                     return Result.Fail(new NotFoundError($"Invoice with id: {invoiceId} is not found."));

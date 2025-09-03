@@ -8,5 +8,6 @@ namespace Billing.Domain.Repositories
         Task AddAsync(Invoice invoice);
         void DeleteAsync(Invoice invoice);
         Task<Invoice?> GetByIdAsync(InvoiceId invoiceId);
+        Task<Invoice?> GetByIdWithLineItemsAsync(InvoiceId invoiceId);
     }
 }
